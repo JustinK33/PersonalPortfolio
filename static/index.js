@@ -12,29 +12,6 @@ const observer = new IntersectionObserver((entries) => {
 const hiddenElements = document.querySelectorAll('.hidden');
 hiddenElements.forEach((el) => observer.observe(el));
 
-
-const scrollers = document.querySelectorAll(".scroller");
-
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    addAnimation();
-}
-
-function addAnimation() {
-    scrollers.forEach((scroller) => {
-        scroller.setAttribute("data-animated", true);
-    
-        const scrollerInner = scroller.querySelector('.scroller_inner');
-        const scrollerContent = Array.from(scrollerInner.children);
-        
-        scrollerContent.forEach(item => {
-            const duplicatedItem = item.cloneNode(true);
-            duplicatedItem.setAttribute('aria-hidden', true);
-            scrollerInner.appendChild(duplicatedItem);
-
-        })
-    }); 
-}
-
 /* === Contact form submit handler === */
 (function(){
   const form = document.getElementById('contact-form');
@@ -92,3 +69,34 @@ if (btn && nav) {
   btn.addEventListener('click', () => nav.classList.toggle('active'));
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('active')));
 }
+
+/* === Not Shipped Yet Modal === */
+(function(){
+  const modal = document.getElementById('not-shipped-modal');
+  const reviewBtns = document.querySelectorAll('.review-project-btn');
+  const closeBtn = document.querySelector('.modal-close');
+
+  if (!modal) return;
+
+  // Open modal when clicking review project buttons
+  reviewBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+    });
+  });
+
+  // Close modal when clicking X
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+})();
