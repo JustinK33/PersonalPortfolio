@@ -23,6 +23,11 @@ def notetube(request):
     return render(request, 'notetube.html')
 
 
+def rumv(request):
+    """RU My Valentine project page"""
+    return render(request, 'rumv.html')
+
+
 @require_http_methods(["GET"])
 def health(request):
     """Health check endpoint"""

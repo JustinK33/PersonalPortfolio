@@ -820,7 +820,7 @@ section {
   position: sticky;
   top: 10rem;
   align-self: start;
-  max-height: calc(100vh - 12rem);
+  max-height: calc(100vh - 6rem);
   overflow-y: auto;
 }
 
