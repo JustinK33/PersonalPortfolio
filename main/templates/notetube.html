@@ -36,9 +36,9 @@
             <div class="project-detail-header">
                 <img src="{% static 'NoteTube-logo.png' %}" alt="NoteTube Logo" class="project-detail-logo">
                 <h1>NoteTube</h1>
-                <p class="project-tagline">Turn any YouTube video into clean notes, flashcards, quizzes, and summaries — in seconds.</p>
+                <p class="project-tagline">Transform YouTube videos and audio files into clean notes, flashcards, quizzes, and summaries — in seconds.</p>
                 <div class="project-detail-actions">
-                    <a href="http://54.167.105.59/" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
+                    <a href="https://notetube.dev/" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
                         Visit NoteTube <i class="bx bx-link-external"></i>
                     </a>
                     <a href="{% url 'home' %}#projects" class="btn btn-secondary">
@@ -51,14 +51,14 @@
                 <div class="project-detail-left">
                     <div class="project-detail-info">
                         <h2>About the Project</h2>
-                        <p>NoteTube is an AI-powered tool that transforms YouTube videos into structured study materials. Simply paste a YouTube URL, and NoteTube's AI will analyze the video content to generate comprehensive notes, flashcards, and summaries.</p>
+                        <p>NoteTube is an AI-powered tool that transforms YouTube videos and MP3 audio files into structured study materials. Simply paste a YouTube URL or upload an MP3 file, and NoteTube's AI will analyze the content to generate comprehensive notes, flashcards, and summaries.</p>
                         
                         <h3>Features</h3>
                         <ul class="project-features">
-                            <li>🎉 Upload YouTube links → instant notes</li>
-                            <li>📝 Generate clean, structured notes</li>
+                            <li>🎉 Upload YouTube links or MP3 files → instant notes</li>
+                            <li>📝 Generate clean, structured notes from video/audio</li>
                             <li>📊 Generate summaries & key takeaways</li>
-                            <li>🎓 Built for students</li>
+                            <li>🎓 Built for students with flexible input options</li>
                         </ul>
 
                         <h3>Technical Stack</h3>
@@ -109,6 +109,10 @@
                         <div class="tech-detail-item">
                             <h4>🔀 Nginx Reverse Proxy Configuration</h4>
                             <p>Configured Nginx as an HTTP(S) reverse proxy to route traffic to Gunicorn, serving static assets directly and enabling proxy caching to reduce application server load and improve request-handling reliability. Handles SSL termination and efficient request distribution.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>🔒 HTTPS & Automatic TLS Renewal with Let's Encrypt</h4>
+                            <p>Implemented automatic TLS/SSL certificate management using Certbot and Let's Encrypt, ensuring the application runs on secure HTTPS with zero manual intervention. Certificates automatically renew 30 days before expiration, maintaining continuous encryption and trust for all user data in transit. This provides industry-standard security compliance and protects against man-in-the-middle attacks.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>⚡ Redis Caching Performance Optimization</h4>
