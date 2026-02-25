@@ -16,18 +16,14 @@
 <body>
     <header class="hidden" id="header">
         <div class="header-container">
-            <a href="#home" class="logo">
-                <span>Justin Kong</span>
-            </a>
 
             <nav class="navbar">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
+                <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
             </nav>
-
-            <a href="#contact" class="dashboard-btn">Contact Me</a>
             <i class="bx bx-menu" id="menu-icon"></i>
         </div>
     </header>
@@ -38,7 +34,7 @@
             <h3 class="hidden">
                 I'm a <span>Second-year student at Rutgers Unitveristy</span>
             </h3>
-            <p class="hidden">Aspiring Software Engineer | Computer Science @ Rutgers University</p>
+            <p class="hidden">Software Engineer | Computer Science @ Rutgers University</p>
             <div class="social-icons hidden">
                 <a href="https://github.com/JustinK33" target="_blank" class="hidden">
                     <i class="bx bxl-github"></i>
@@ -67,9 +63,9 @@
         <div class="about-content">
             <h2 class="hidden">About <span>Me</span></h2>
             <div class="about-text hidden">
-                <p>Passionate undergraduate pursuing a B.S. in Computer Science, bringing hands-on experience with Python and back-end software development.</p>
-                <p>As a backend developer, I specialize in building robust, scalable APIs and server-side applications using Django, FastAPI, and Flask. I have experience working with PostgreSQL and MongoDB databases, implementing Redis caching for performance optimization, and deploying applications on AWS with Docker and Nginx.</p>
-                <p>I'm eager to build scalable APIs, explore machine learning, AI, and leverage strong communication, collaboration, and problem-solving skills to deliver meaningful results.</p>
+                <p>Passionate Computer Science undergraduate focused on backend engineering and distributed systems. I enjoy designing reliable, scalable systems that handle real-world traffic and complexity.</p>
+                <p>My work centers on building high-performance APIs and server-side systems with strong attention to concurrency, fault tolerance, and data consistency. I have worked on improving system reliability, optimizing throughput, and designing architectures that scale under load.</p>
+                <p>I am especially interested in distributed systems, system design, and building infrastructure that is resilient, observable, and built to last, while collaborating effectively to ship meaningful, production-ready software.</p>
             </div>
         </div>
 
@@ -132,39 +128,51 @@
         </div>
     </section>
 
+    <section class="experience" id="experience">
+        <div class="experience-inner">
+            <h2 class="experience-giant hidden">EXPERIENCES</h2>
+            <div class="experience-list">
+                <a class="experience-row hidden" href="https://deepiri.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="experience-left">
+                        <h3 class="company-large">Deepiri - Software Engineer Intern</h3>
+                        <p class="experience-summary">As a Software Engineering Intern, I contributed to strengthening the performance, scalability, and reliability of backend systems within a distributed architecture. I worked on improving how services handled high traffic, failures, and real-world production load while increasing system observability. My role focused on building resilient infrastructure that could scale efficiently and operate reliably under pressure.</p>
+                        <p class="experience-dates">Nov 2025 — Present · Pittsburgh, PA (Remote)</p>
+                    </div>
+                    <div class="experience-right">
+                        <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section class="projects" id="projects">
+        <div class="projects-inner">
+            <h2 class="projects-giant hidden">PROJECTS</h2>
+            <div class="projects-list">
+                <a href="{% url 'notetube' %}" class="project-row hidden">
+                    <div class="project-thumb">
+                        <img src="{% static 'notetube-screenshot.png' %}" alt="NoteTube screenshot">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">NoteTube</h3>
+                        <p class="project-desc">Turn any YouTube video into AI generated notes, flashcards, quizzes, and summaries — in seconds. Built with a FastAPI backend, React frontend, and OpenAI integration for intelligent content extraction.</p>
+                    </div>
+                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
+                </a>
 
-        <h2 class="heading hidden">Pro<span>jects</span></h2>
-
-        <div class="projects-box">
-            <div class="project-card hidden">
-                <img src="{% static 'NoteTube-logo.png' %}" alt="">
-                <h3>NoteTube</h3>
-                <p>Turn your YoutTube video into AI generated notes</p>
-                <a href="{% url 'notetube' %}" class="btn">Review Project</a>
+                <a href="{% url 'rumv' %}" class="project-row hidden">
+                    <div class="project-thumb">
+                        <img src="{% static 'rumv-screenshot.png' %}" alt="RU My Valentine screenshot">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">RU My Valentine</h3>
+                        <p class="project-desc">A Valentine's Day matching app for Rutgers students. Built with Django, PostgreSQL, and a custom matching algorithm that paired over 500 students based on compatibility questions and preferences.</p>
+                    </div>
+                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
+                </a>
             </div>
-            
-            <div class="project-card hidden">
-                <img src="{% static 'jwt.webp' %}" alt="">
-                <h3>TeamBrain</h3>
-                <p>Chat app for organizing shared docs and decisions in one place</p>
-                <a href="#" class="btn review-project-btn">Review Project</a>
-            </div>
-
-            <div class="project-card hidden">
-                <img src="{% static 'rumv.jpg' %}" alt="">
-                <h3>RU My Valentine</h3>
-                <p>Valentines day matching app for rutgers students</p>
-                <a href="{% url 'rumv' %}" class="btn">Review Project</a>
-            </div>
-
-            <div class="project-card hidden">
-                <img src="{% static 'instaapi.jpg' %}" alt="">
-                <h3>WeatherConcierge</h3>
-                <p>Weather assistant powered by LangChain + OpenAI + weather API.</p>
-                <a href="#" class="btn review-project-btn">Review Project</a>
-            </div>
-        </div> 
+        </div>
     </section>
 
     <section class="hidden" id="contact">
