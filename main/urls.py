@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/contact', views.api_contact, name='api_contact'),
     path('projects/notetube', views.notetube, name='notetube'),
     path('projects/rumv', views.rumv, name='rumv'),
+    path('projects/dailynode', views.dailynode, name='dailynode'),
 ]

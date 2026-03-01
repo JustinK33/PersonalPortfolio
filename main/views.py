@@ -28,6 +28,11 @@ def rumv(request):
     return render(request, 'rumv.html')
 
 
+def dailynode(request):
+    """DailyNode Discord bot project page"""
+    return render(request, 'dailynode.html')
+
+
 @require_http_methods(["GET"])
 def health(request):
     """Health check endpoint"""
