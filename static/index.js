@@ -1,16 +1,142 @@
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) =>{
-        console.log(entry) 
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-        } else {
-            entry.target.classList.remove('show');
-        }
-    });
-});
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) {
+      if (existing.dataset.loaded === 'true') {
+        resolve();
+        return;
+      }
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
+    }
 
-const hiddenElements = document.querySelectorAll('.hidden');
-hiddenElements.forEach((el) => observer.observe(el));
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = () => {
+      script.dataset.loaded = 'true';
+      resolve();
+    };
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+function initRevealFallback() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+      }
+    });
+  });
+
+  const hiddenElements = document.querySelectorAll('.hidden');
+  hiddenElements.forEach((el) => observer.observe(el));
+}
+
+function initGsapReveal() {
+  const hiddenElements = Array.from(document.querySelectorAll('.hidden'));
+  if (
+    !hiddenElements.length ||
+    typeof window.gsap === 'undefined' ||
+    typeof window.ScrollTrigger === 'undefined'
+  ) {
+    return;
+  }
+
+  window.gsap.registerPlugin(window.ScrollTrigger);
+
+  // In GSAP mode, avoid pinning visible state via CSS class so reverse works.
+  hiddenElements.forEach((el) => el.classList.remove('show'));
+
+  // Keep fixed navbar/header visible immediately.
+  const header = document.getElementById('header');
+  if (header && header.classList.contains('hidden')) {
+    window.gsap.set(header, { autoAlpha: 1, x: 0, filter: 'blur(0px)' });
+  }
+
+  const sectionMap = new Map();
+  hiddenElements.forEach((el) => {
+    if (el.id === 'header') return;
+
+    const section = el.closest('section') || el.closest('header') || el.closest('footer') || document.body;
+    if (!sectionMap.has(section)) {
+      sectionMap.set(section, []);
+    }
+    sectionMap.get(section).push(el);
+  });
+
+  sectionMap.forEach((elements, section) => {
+    const normalElements = elements.filter((el) => !el.classList.contains('slow-reveal'));
+    const slowElements = elements.filter((el) => el.classList.contains('slow-reveal'));
+
+    if (normalElements.length) {
+      window.gsap.fromTo(
+        normalElements,
+        {
+          autoAlpha: 0,
+          x: (i) => (normalElements[i].classList.contains('slide-right') ? 56 : -56),
+          filter: 'blur(5px)'
+        },
+        {
+          autoAlpha: 1,
+          x: 0,
+          filter: 'blur(0px)',
+          duration: 0.22,
+          ease: 'power2.out',
+          stagger: 0.03,
+          overwrite: true,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 95%',
+            end: 'bottom 15%',
+            toggleActions: 'play reverse play reverse'
+          }
+        }
+      );
+    }
+
+    if (slowElements.length) {
+      window.gsap.fromTo(
+        slowElements,
+        {
+          autoAlpha: 0,
+          x: (i) => (slowElements[i].classList.contains('slide-right') ? 64 : -64),
+          filter: 'blur(6px)'
+        },
+        {
+          autoAlpha: 1,
+          x: 0,
+          filter: 'blur(0px)',
+          duration: 0.3,
+          ease: 'power2.out',
+          stagger: 0.04,
+          overwrite: true,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 95%',
+            end: 'bottom 15%',
+            toggleActions: 'play reverse play reverse'
+          }
+        }
+      );
+    }
+  });
+}
+
+(async function initAnimations() {
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js');
+    initGsapReveal();
+  } catch (err) {
+    initRevealFallback();
+  }
+})();
 
 /* === Contact form submit handler === */
 (function(){
