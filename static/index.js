@@ -128,6 +128,113 @@ function initGsapReveal() {
   });
 }
 
+function initNavbarIndicator() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  const navLinks = Array.from(navbar.querySelectorAll('a[href^="#"], a[href*="#"]'));
+  if (!navLinks.length) return;
+
+  const indicator = document.createElement('span');
+  indicator.className = 'nav-indicator';
+  indicator.setAttribute('aria-hidden', 'true');
+  indicator.style.position = 'absolute';
+  indicator.style.left = '0';
+  indicator.style.bottom = '0';
+  indicator.style.width = '0';
+  indicator.style.pointerEvents = 'none';
+  navbar.appendChild(indicator);
+
+  function moveIndicatorTo(link) {
+    if (!link) return;
+    const navRect = navbar.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const left = linkRect.left - navRect.left;
+    indicator.style.width = `${linkRect.width}px`;
+    indicator.style.transform = `translateX(${left}px)`;
+    navbar.dataset.indicatorReady = 'true';
+  }
+
+  function getSectionForLink(link) {
+    const href = link.getAttribute('href') || '';
+    const hashIndex = href.indexOf('#');
+    if (hashIndex === -1) return null;
+    const id = href.slice(hashIndex + 1);
+    if (!id) return null;
+    return document.getElementById(id);
+  }
+
+  function setActiveLink(link) {
+    navLinks.forEach((item) => item.classList.remove('is-active'));
+    if (link) {
+      link.classList.add('is-active');
+      moveIndicatorTo(link);
+    }
+  }
+
+  const sectionToLink = new Map();
+  navLinks.forEach((link) => {
+    const section = getSectionForLink(link);
+    if (section) sectionToLink.set(section, link);
+
+    link.addEventListener('mouseenter', () => moveIndicatorTo(link));
+    link.addEventListener('focus', () => moveIndicatorTo(link));
+    link.addEventListener('click', () => setActiveLink(link));
+  });
+
+  navbar.addEventListener('mouseleave', () => {
+    const active = navbar.querySelector('a.is-active') || navLinks[0];
+    moveIndicatorTo(active);
+  });
+
+  const sections = Array.from(sectionToLink.keys());
+  if (sections.length) {
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) return;
+        const activeLink = sectionToLink.get(visible.target);
+        if (activeLink) setActiveLink(activeLink);
+      },
+      { threshold: [0.35, 0.55, 0.75], rootMargin: '-20% 0px -55% 0px' }
+    );
+
+    sections.forEach((section) => sectionObserver.observe(section));
+  }
+
+  const initialActive = navbar.querySelector('a.is-active') || navLinks[0];
+  setActiveLink(initialActive);
+  window.addEventListener('resize', () => {
+    const active = navbar.querySelector('a.is-active') || navLinks[0];
+    moveIndicatorTo(active);
+  });
+}
+
+function initHeroParallax() {
+  const heroImage = document.querySelector('.home-img img');
+  const homeSection = document.getElementById('home');
+  if (!heroImage || !homeSection) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
+  if (prefersReducedMotion || !isDesktop) return;
+
+  homeSection.addEventListener('mousemove', (e) => {
+    const rect = homeSection.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    heroImage.style.transform = `translate3d(${x * 18}px, ${y * 14}px, 0) scale(1.015)`;
+  });
+
+  homeSection.addEventListener('mouseleave', () => {
+    heroImage.style.transform = 'translate3d(0, 0, 0) scale(1)';
+  });
+}
+
 (async function initAnimations() {
   try {
     await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
@@ -137,6 +244,9 @@ function initGsapReveal() {
     initRevealFallback();
   }
 })();
+
+initNavbarIndicator();
+initHeroParallax();
 
 /* === Contact form submit handler === */
 (function(){
