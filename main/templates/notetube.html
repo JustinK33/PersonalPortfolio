@@ -22,6 +22,7 @@
             <nav class="navbar">
                 <a href="{% url 'home' %}#home">Home</a>
                 <a href="{% url 'home' %}#about">About</a>
+                <a href="{% url 'home' %}#experience">Experience</a>
                 <a href="{% url 'home' %}#projects">Projects</a>
                 <a href="{% url 'home' %}#contact">Contact</a>
             </nav>
@@ -36,7 +37,7 @@
             <div class="project-detail-header">
                 <img src="{% static 'NoteTube-logo.png' %}" alt="NoteTube Logo" class="project-detail-logo">
                 <h1>NoteTube</h1>
-                <p class="project-tagline">Transform YouTube videos and audio files into clean notes, flashcards, quizzes, and summaries — in seconds.</p>
+                <p class="project-tagline">Paste a YouTube link, generate notes fast, and manage everything from one simple dashboard.</p>
                 <div class="project-detail-actions">
                     <a href="https://notetube.dev/" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
                         Visit NoteTube <i class="bx bx-link-external"></i>
@@ -51,14 +52,16 @@
                 <div class="project-detail-left">
                     <div class="project-detail-info">
                         <h2>About the Project</h2>
-                        <p>NoteTube is an AI-powered tool that transforms YouTube videos and MP3 audio files into structured study materials. Simply paste a YouTube URL or upload an MP3 file, and NoteTube's AI will analyze the content to generate comprehensive notes, flashcards, and summaries.</p>
+                        <p>NoteTube is a simple notes platform for YouTube content. Paste a YouTube link, generate notes from the video, and manage everything in one place with your own account.</p>
                         
                         <h3>Features</h3>
                         <ul class="project-features">
-                            <li>🎉 Upload YouTube links or MP3 files → instant notes</li>
-                            <li>📝 Generate clean, structured notes from video/audio</li>
-                            <li>📊 Generate summaries & key takeaways</li>
-                            <li>🎓 Built for students with flexible input options</li>
+                            <li>📺 Paste a YouTube link and generate notes from the video</li>
+                            <li>🗂️ View all your saved notes in one place</li>
+                            <li>📄 Open each note's detail page to read full content</li>
+                            <li>✏️ Edit and update notes after they are generated</li>
+                            <li>🔐 Sign up and log in to keep your notes tied to your account</li>
+                            <li>🏠 Use a simple home/dashboard experience to manage notes</li>
                         </ul>
 
                         <h3>Technical Stack</h3>
