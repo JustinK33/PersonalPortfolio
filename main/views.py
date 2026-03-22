@@ -33,6 +33,11 @@ def dailynode(request):
     return render(request, 'dailynode.html')
 
 
+def gesturecontrol(request):
+    """Gesture Control computer vision project page"""
+    return render(request, 'gesturecontrol.html')
+
+
 @require_http_methods(["GET"])
 def health(request):
     """Health check endpoint"""

@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'responsive.css' %}">
+
+    <title>Gesture Control | Justin Kong Portfolio</title>
+    <link rel="icon" href="{% static 'jk.png' %}" type="image/x-icon">
+    <script src="{% static 'index.js' %}" defer></script>
+</head>
+<body>
+    <header class="hidden" id="header">
+        <div class="header-container">
+            <a href="{% url 'home' %}" class="logo">
+                <span>Justin Kong</span>
+            </a>
+
+            <nav class="navbar">
+                <a href="{% url 'home' %}#home">Home</a>
+                <a href="{% url 'home' %}#about">About</a>
+                <a href="{% url 'home' %}#experience">Experience</a>
+                <a href="{% url 'home' %}#projects">Projects</a>
+                <a href="{% url 'home' %}#contact">Contact</a>
+            </nav>
+
+            <a href="{% url 'home' %}#contact" class="dashboard-btn">Contact Me</a>
+            <i class="bx bx-menu" id="menu-icon"></i>
+        </div>
+    </header>
+
+    <section class="project-detail" id="project-detail">
+        <div class="project-detail-content compact-project-page">
+            <div class="project-detail-header">
+                <h1>Gesture Control</h1>
+                <p class="project-tagline">Real-time webcam computer vision app that tracks faces and hands, draws landmarks, and maps pinch gestures to desktop mouse control.</p>
+                <div class="project-detail-actions">
+                    <a href="https://github.com/JustinK33/GestureControl.git" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
+                        View Repository <i class="bx bx-link-external"></i>
+                    </a>
+                    <a href="{% url 'home' %}#projects" class="btn btn-secondary">
+                        Back to Projects
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-kpis">
+                <div class="project-kpi">
+                    <span class="kpi-label">Vision Stack</span>
+                    <span class="kpi-value">OpenCV + MediaPipe Tasks</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Tracking</span>
+                    <span class="kpi-value">Multi-face + up to 4 hands</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Interaction</span>
+                    <span class="kpi-value">Cursor move + pinch-to-click</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Models</span>
+                    <span class="kpi-value">YuNet ONNX + hand_landmarker.task</span>
+                </div>
+            </div>
+
+            <div class="project-detail-main compact-main-grid">
+                <div class="project-detail-left">
+                    <div class="project-detail-info">
+                        <h2>Project Snapshot</h2>
+                        <p>Gesture Control processes webcam frames in real time, renders CV overlays, and turns hand gestures into practical desktop input. The app keeps the pipeline modular while running fully in a single Python entrypoint.</p>
+
+                        <h3>Core Components</h3>
+                        <ul class="project-features compact-features">
+                            <li>Continuous OpenCV capture loop with safe exit and frame-failure handling</li>
+                            <li>YuNet face detector via cv2.FaceDetectorYN with per-face bounding boxes</li>
+                            <li>MediaPipe HandLandmarker LIVE_STREAM mode with async callback</li>
+                            <li>Landmark-to-pixel utility helpers for clean drawing and geometry logic</li>
+                            <li>Index fingertip cursor mapping with mirror behavior for natural control</li>
+                            <li>Pinch click detection using adaptive threshold + click cooldown</li>
+                        </ul>
+
+                        <h3>Tech Stack</h3>
+                        <div class="tech-stack compact-tech-stack">
+                            <div class="tech-category">
+                                <h4>Computer Vision</h4>
+                                <ul class="tech-list">
+                                    <li>Python</li>
+                                    <li>OpenCV (cv2)</li>
+                                    <li>MediaPipe Tasks Vision API</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <h4>Interaction & Assets</h4>
+                                <ul class="tech-list">
+                                    <li>PyAutoGUI</li>
+                                    <li>face_detection_yunet_2023mar.onnx</li>
+                                    <li>hand_landmarker.task</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail-right compact-right-column">
+                    <h3>Implementation Highlights</h3>
+                    <div class="technical-details compact-grid">
+                        <div class="tech-detail-item">
+                            <h4>Frame-by-Frame Pipeline</h4>
+                            <p>Capture, detect faces, run async hand inference, draw overlays, apply gesture controls, and render output in one tight loop.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Robust Gesture Click Logic</h4>
+                            <p>Pinch detection scales with hand size and includes cooldown debounce to reduce accidental repeated clicks.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Usability-Tuned Cursor Mapping</h4>
+                            <p>Only cursor motion is mirrored, preserving webcam intuition while keeping landmark calculations stable.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Portfolio-Ready Demo Value</h4>
+                            <p>Combines visible CV output and real OS interaction output, making the project strong for demos and technical interviews.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="hidden" id="footer">
+        <div class="social-icons">
+            <a href="https://github.com/JustinK33" target="_blank">
+                <i class="bx bxl-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/justin-hkong/" target="_blank">
+                <i class="bx bxl-linkedin-square"></i>
+            </a>
+            <a href="https://www.instagram.com/justin.hyun/" target="_blank">
+                <i class="bx bxl-instagram-alt"></i>
+            </a>
+        </div>
+        <p class="copyright">
+            © Justin Kong | All Rights Reserved
+        </p>
+    </footer>
+</body>
+</html>

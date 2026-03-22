@@ -8,4 +8,5 @@ urlpatterns = [
     path('projects/notetube', views.notetube, name='notetube'),
     path('projects/rumv', views.rumv, name='rumv'),
     path('projects/dailynode', views.dailynode, name='dailynode'),
+    path('projects/gesture-control', views.gesturecontrol, name='gesturecontrol'),
 ]

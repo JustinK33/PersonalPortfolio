@@ -137,6 +137,7 @@ section {
     opacity: 0.8;
 }
 .navbar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 3.2rem;
@@ -149,6 +150,8 @@ section {
 }
 
 .navbar a{
+  position: relative;
+  z-index: 2;
   font-size: 1.6rem;
   color: var(--text-color);
   font-weight: 500;
@@ -162,6 +165,28 @@ section {
   color: #ffffff;
   transform: scale(1.03);
   opacity: 0.95;
+}
+
+.navbar a.is-active {
+  color: #ffffff;
+}
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0.55rem;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7dd3fc 0%, #93c5fd 100%);
+  box-shadow: 0 0 14px rgba(125, 211, 252, 0.7);
+  transform: translateX(0);
+  opacity: 0;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), width 220ms cubic-bezier(.2,.8,.2,1), opacity 150ms ease;
+}
+
+.navbar[data-indicator-ready='true'] .nav-indicator {
+  opacity: 1;
 }
 .dashboard-btn{
   display: none;
@@ -565,11 +590,12 @@ section {
   border: 1px solid rgba(255,255,255,0.04);
   border-radius: 1rem;
   text-decoration: none;
-  transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms cubic-bezier(.2,.9,.2,1);
+  transition: transform 200ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms cubic-bezier(.2,.9,.2,1), border-color 200ms ease;
 }
 .project-row:hover{
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(125, 211, 252, 0.35);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.36);
 }
 
 .project-thumb{
@@ -584,6 +610,11 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 260ms ease;
+}
+
+.project-row:hover .project-thumb img {
+  transform: scale(1.05);
 }
 
 .project-info{
@@ -597,11 +628,11 @@ section {
   margin: 0 0 0.6rem 0;
 }
 .project-desc{
-  font-size: 1.5rem;
-  color: rgba(255,255,255,0.55);
+  font-size: 1.65rem;
+  color: rgba(255,255,255,0.82);
   margin: 0;
   max-width: 70ch;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .project-arrow{
@@ -619,7 +650,7 @@ section {
 }
 .project-row:hover .project-arrow{
   background: rgba(255,122,89,0.08);
-  transform: scale(1.03);
+  transform: translateX(4px) scale(1.06) rotate(12deg);
 }
 
 /* Keep old styles hidden */
@@ -831,21 +862,28 @@ section {
 
 /* Project Detail Page Styles */
 .project-detail {
-  padding: 8rem 10% 4rem;
+  padding: 7rem 8% 3rem;
   margin-top: 6rem;
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
-  min-height: calc(100vh - 14rem);
+  min-height: calc(100vh - 10rem);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .project-detail-content {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.8rem;
   width: 100%;
+}
+
+.compact-project-page {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.4rem;
+  padding: 2rem;
 }
 
 .project-detail-header {
@@ -882,7 +920,7 @@ section {
 .project-detail-main {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 2rem;
   align-items: start;
 }
 
@@ -894,11 +932,10 @@ section {
 .project-detail-right {
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 10rem;
+  position: static;
   align-self: start;
-  max-height: calc(100vh - 6rem);
-  overflow-y: auto;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .project-detail-right h3 {
@@ -942,6 +979,11 @@ section {
   margin: 0;
 }
 
+.compact-features li {
+  padding: 0.9rem 1.1rem;
+  font-size: 1.4rem;
+}
+
 .project-features li {
   font-size: 1.5rem;
   color: var(--text-color);
@@ -962,6 +1004,11 @@ section {
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-top: 1rem;
+}
+
+.compact-tech-stack {
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
 
 .tech-category {
@@ -1011,11 +1058,17 @@ section {
   margin-top: 1rem;
 }
 
+.compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .tech-detail-item {
   background-color: var(--second-bg-color);
   border: 1px solid var(--main-color);
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1.2rem;
   transition: 0.3s ease;
 }
 
@@ -1026,18 +1079,63 @@ section {
 }
 
 .tech-detail-item h4 {
-  font-size: 1.8rem;
+  font-size: 1.65rem;
   color: var(--main-color);
   margin: 0 0 0.8rem 0;
   font-weight: 600;
 }
 
 .tech-detail-item p {
-  font-size: 1.5rem;
-  line-height: 1.6;
+  font-size: 1.4rem;
+  line-height: 1.5;
   color: var(--text-color);
   opacity: 0.9;
   margin: 0;
+}
+
+.project-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0.5rem auto 0.2rem;
+}
+
+.project-kpi {
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(143, 161, 179, 0.75);
+  border-radius: 1rem;
+  padding: 1.15rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: center;
+  text-align: center;
+}
+
+.kpi-label {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+.kpi-value {
+  font-size: 2.15rem;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.compact-main-grid {
+  margin-top: 0.4rem;
+}
+
+.compact-right-column h3,
+.compact-project-page .project-detail-info h2,
+.compact-project-page .project-detail-info h3 {
+  margin-bottom: 0.6rem;
 }
 
 .project-detail-actions {
@@ -1054,11 +1152,11 @@ section {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  width: 100%;
+  width: auto;
 }
 
 .project-detail-actions .btn {
-  width: 100%;
+  width: auto;
   text-align: center;
 }
 
@@ -1077,9 +1175,13 @@ section {
 
 @media(max-width: 1285px) {
   .project-detail {
-    padding: 8rem 5% 4rem;
+    padding: 7.5rem 4% 3rem;
     margin-top: 6rem;
     min-height: auto;
+  }
+
+  .compact-project-page {
+    padding: 1.4rem;
   }
   
   .project-detail-main {
@@ -1116,6 +1218,24 @@ section {
   
   .project-features {
     grid-template-columns: 1fr;
+  }
+
+  .compact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+    margin-top: 0.6rem;
+  }
+
+  .kpi-label {
+    font-size: 1.3rem;
+  }
+
+  .kpi-value {
+    font-size: 1.9rem;
   }
   
   .tech-stack {

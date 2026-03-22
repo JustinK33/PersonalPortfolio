@@ -33,11 +33,11 @@
     </header>
 
     <section class="project-detail" id="project-detail">
-        <div class="project-detail-content">
+        <div class="project-detail-content compact-project-page">
             <div class="project-detail-header">
                 <img src="{% static 'NoteTube-logo.png' %}" alt="NoteTube Logo" class="project-detail-logo">
                 <h1>NoteTube</h1>
-                <p class="project-tagline">Paste a YouTube link, generate notes fast, and manage everything from one simple dashboard.</p>
+            <p class="project-tagline">Paste a YouTube link, generate structured notes fast, and manage your saved study content from one dashboard.</p>
                 <div class="project-detail-actions">
                     <a href="https://notetube.dev/" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
                         Visit NoteTube <i class="bx bx-link-external"></i>
@@ -48,14 +48,33 @@
                 </div>
             </div>
 
-            <div class="project-detail-main">
+            <div class="project-kpis">
+                <div class="project-kpi">
+                    <span class="kpi-label">Latency Gain</span>
+                    <span class="kpi-value">313ms -> 44ms</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Core Stack</span>
+                    <span class="kpi-value">Django + PostgreSQL + Redis</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Infra</span>
+                    <span class="kpi-value">AWS EC2 + Docker + Nginx</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">AI Services</span>
+                    <span class="kpi-value">OpenAI + AssemblyAI</span>
+                </div>
+            </div>
+
+            <div class="project-detail-main compact-main-grid">
                 <div class="project-detail-left">
                     <div class="project-detail-info">
                         <h2>About the Project</h2>
-                        <p>NoteTube is a simple notes platform for YouTube content. Paste a YouTube link, generate notes from the video, and manage everything in one place with your own account.</p>
+                        <p>NoteTube turns YouTube videos into usable notes and lets users edit, save, and revisit content in a clean account-based workflow.</p>
                         
                         <h3>Features</h3>
-                        <ul class="project-features">
+                        <ul class="project-features compact-features">
                             <li>📺 Paste a YouTube link and generate notes from the video</li>
                             <li>🗂️ View all your saved notes in one place</li>
                             <li>📄 Open each note's detail page to read full content</li>
@@ -65,7 +84,7 @@
                         </ul>
 
                         <h3>Technical Stack</h3>
-                        <div class="tech-stack">
+                        <div class="tech-stack compact-tech-stack">
                             <div class="tech-category">
                                 <h4>Backend</h4>
                                 <ul class="tech-list">
@@ -102,28 +121,28 @@
                     </div>
                 </div>
 
-                <div class="project-detail-right">
+                <div class="project-detail-right compact-right-column">
                     <h3>Architecture & Infrastructure</h3>
-                    <div class="technical-details">
+                    <div class="technical-details compact-grid">
                         <div class="tech-detail-item">
                             <h4>🚀 Production Deployment on AWS EC2</h4>
-                            <p>Deployed and Dockerized a Django application on AWS EC2 (Linux), running Gunicorn for stable production serving. This enables simpler, repeatable deployments with containerization.</p>
+                            <p>Dockerized Django app deployed on Linux EC2 with Gunicorn for repeatable and stable production serving.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🔀 Nginx Reverse Proxy Configuration</h4>
-                            <p>Configured Nginx as an HTTP(S) reverse proxy to route traffic to Gunicorn, serving static assets directly and enabling proxy caching to reduce application server load and improve request-handling reliability. Handles SSL termination and efficient request distribution.</p>
+                            <p>Nginx routes traffic to Gunicorn, serves static assets, and reduces backend pressure with proxy-level optimizations.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🔒 HTTPS & Automatic TLS Renewal with Let's Encrypt</h4>
-                            <p>Implemented automatic TLS/SSL certificate management using Certbot and Let's Encrypt, ensuring the application runs on secure HTTPS with zero manual intervention. Certificates automatically renew 30 days before expiration, maintaining continuous encryption and trust for all user data in transit. This provides industry-standard security compliance and protects against man-in-the-middle attacks.</p>
+                            <p>HTTPS is enforced with Certbot + Let's Encrypt, including automatic certificate renewal for continuous secure traffic.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>⚡ Redis Caching Performance Optimization</h4>
-                            <p>Achieved 85.9% latency reduction (from 313ms → 44ms) by implementing Redis caching for high-traffic user/session reads, significantly cutting repeated PostgreSQL database hits. This optimization dramatically improved API route response times and overall application performance.</p>
+                            <p>Redis caching cut hot-path latency by 85.9% (313ms to 44ms) by reducing repeated PostgreSQL lookups.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🗄️ Database Architecture</h4>
-                            <p>Utilized PostgreSQL as the primary database with Redis for session management and high-frequency data caching. This hybrid approach optimizes both data persistence and read performance, reducing database load while maintaining data integrity.</p>
+                            <p>PostgreSQL handles durable data while Redis supports sessions and high-frequency reads for smoother response times.</p>
                         </div>
                     </div>
                 </div>

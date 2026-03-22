@@ -33,10 +33,10 @@
     </header>
 
     <section class="project-detail" id="project-detail">
-        <div class="project-detail-content">
+        <div class="project-detail-content compact-project-page">
             <div class="project-detail-header">
                 <h1>RU My Valentine</h1>
-                <p class="project-tagline">A personalized matching platform connecting Rutgers students romantically through intelligent compatibility algorithms.</p>
+            <p class="project-tagline">A Rutgers-only matching platform using secure auth and compatibility scoring to connect students at scale.</p>
                 <div class="project-detail-actions">
                     <a href="https://rumv.me/" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
                         Visit RU My Valentine <i class="bx bx-link-external"></i>
@@ -47,13 +47,32 @@
                 </div>
             </div>
 
-            <div class="project-detail-main">
+            <div class="project-kpis">
+                <div class="project-kpi">
+                    <span class="kpi-label">Users</span>
+                    <span class="kpi-value">2,000+ Rutgers students</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Search Performance</span>
+                    <span class="kpi-value">< 400ms latency</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Availability</span>
+                    <span class="kpi-value">99.9% uptime</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Matching Model</span>
+                    <span class="kpi-value">70-dimensional embeddings</span>
+                </div>
+            </div>
+
+            <div class="project-detail-main compact-main-grid">
                 <div class="project-detail-left">
                     <div class="project-detail-info">
                         <h2>About the Project</h2>
-                        <p>RU My Valentine is a dedicated platform for Rutgers students to connect romantically, leveraging a personalized questionnaire and a matching algorithm. Developed collaboratively by a team of five, the platform aims to foster genuine connections among students while supporting a safe, inclusive, and engaging community experience.</p>                        
+                        <p>Built with a team of five, RU My Valentine combines Rutgers-only identity verification with weighted compatibility scoring to create meaningful student matches.</p>
                         <h3>Key Accomplishments</h3>
-                        <ul class="project-features">
+                        <ul class="project-features compact-features">
                             <li>💝 Implemented Google SSO with OAuth 2.0/OIDC for secure ScarletMail authentication</li>
                             <li>🧮 Built weighted-vector compatibility algorithm serving 2,000+ Rutgers users</li>
                             <li>⚡ Architected scalable matching platform with 70-dimensional embeddings achieving <400 ms search latency</li>
@@ -61,7 +80,7 @@
                         </ul>
 
                         <h3>Technical Stack</h3>
-                        <div class="tech-stack">
+                        <div class="tech-stack compact-tech-stack">
                             <div class="tech-category">
                                 <h4>Frontend</h4>
                                 <ul class="tech-list">
@@ -101,32 +120,32 @@
                     </div>
                 </div>
 
-                <div class="project-detail-right">
+                <div class="project-detail-right compact-right-column">
                     <h3>Architecture & Key Features</h3>
-                    <div class="technical-details">
+                    <div class="technical-details compact-grid">
                         <div class="tech-detail-item">
                             <h4>🔐 Secure Google OAuth2 Authentication</h4>
-                            <p>Implemented OAuth 2.0/OIDC with PKCE (Proof Key for Code Exchange) for maximum security, ID token verification, and hosted-domain enforcement exclusively for ScarletMail addresses. JWT-based token authentication secures all REST APIs, ensuring only verified Rutgers students can access the platform and its matching algorithms.</p>
+                            <p>OAuth 2.0/OIDC with PKCE, ID token verification, and Rutgers-domain checks restrict platform access to verified students.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🧮 Weighted-Vector Compatibility Algorithm</h4>
-                            <p>Engineered a sophisticated machine learning-powered matching system utilizing 70-dimensional embeddings to represent student profiles in high-dimensional vector space. The algorithm analyzes multi-dimensional questionnaire responses, applies weighted-vector calculations to measure compatibility scores, and uses cosine similarity to identify the most compatible matches with measurable precision and accuracy.</p>
+                            <p>Questionnaire responses are encoded into 70-dimensional vectors and scored with weighted similarity to rank compatible matches.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>⚡ High-Performance Search Infrastructure</h4>
-                            <p>Architected a horizontally scalable matching platform achieving sub-400ms search latency with 99.9% uptime SLA. Optimized embeddings storage, implemented intelligent caching strategies, and leveraged Redis for session management and match result caching to enable rapid, real-time matches even under peak load with 2,000+ concurrent active users.</p>
+                            <p>Optimized embedding storage and Redis caching to keep matchmaking fast under load while sustaining sub-400ms query times.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🚀 Containerized Deployment with Docker & CI/CD</h4>
-                            <p>Containerized all services using Docker Compose for local development consistency and production parity. Deployed on AWS EC2 with automated GitHub Actions CI/CD pipelines that trigger on every push, running comprehensive test suites, building Docker images, and orchestrating zero-downtime deployments.</p>
+                            <p>Services are containerized for parity and deployed with CI/CD automation that runs tests, builds images, and ships updates reliably.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>💬 Real-Time WebSocket Communication</h4>
-                            <p>Implemented WebSocket support in FastAPI for real-time bidirectional communication between matched users. Enables instant messaging, live notifications when matches occur, and real-time presence indicators, creating an engaging, interactive experience that drives user retention and connection quality.</p>
+                            <p>WebSocket support enables low-latency match notifications and live communication flows between users.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>📊 Scalable Database Architecture with Neon</h4>
-                            <p>Leverages Neon's serverless PostgreSQL infrastructure for automatic scaling, branching for testing, and point-in-time recovery. SQLAlchemy ORM provides type-safe database interactions, while Redis caching reduces database load by 60%+ for frequently accessed user profiles and match results, ensuring consistent performance at scale.</p>
+                            <p>Neon PostgreSQL + SQLAlchemy provides scalable persistence while Redis offloads high-read paths to keep response times consistent.</p>
                         </div>
                     </div>
                 </div>

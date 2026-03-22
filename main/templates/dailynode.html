@@ -33,11 +33,11 @@
     </header>
 
     <section class="project-detail" id="project-detail">
-        <div class="project-detail-content">
+        <div class="project-detail-content compact-project-page">
             <div class="project-detail-header">
                 <img src="{% static 'dailynodebanner.png' %}" alt="DailyNode Logo" class="project-detail-logo">
                 <h1>DailyNode</h1>
-                <p class="project-tagline">A Discord bot for productivity — get accountable and conquer LeetCode's top 150 interview questions daily.</p>
+            <p class="project-tagline">A Discord productivity bot that keeps coding streaks alive with automated reminders, per-guild setup, and reliable cloud hosting.</p>
                 <div class="project-detail-actions">
                     <a href="https://discord.com/oauth2/authorize?client_id=1476855166958440458&permissions=8&integration_type=0&scope=bot" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
                         Invite Bot <i class="bx bx-link-external"></i>
@@ -51,13 +51,32 @@
                 </div>
             </div>
 
-            <div class="project-detail-main">
+            <div class="project-kpis">
+                <div class="project-kpi">
+                    <span class="kpi-label">Scale</span>
+                    <span class="kpi-value">1,000+ users</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Architecture</span>
+                    <span class="kpi-value">Event-driven bot workflows</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Deployment</span>
+                    <span class="kpi-value">Docker on Google Cloud</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Automation</span>
+                    <span class="kpi-value">CI/CD with GitHub Actions</span>
+                </div>
+            </div>
+
+            <div class="project-detail-main compact-main-grid">
                 <div class="project-detail-left">
                     <div class="project-detail-info">
                         <h2>About the Project</h2>
-                        <p>DailyNode is an event-driven Discord bot for productivity that keeps developers accountable for solving LeetCode's top 150 interview questions daily. Built with scalable cloud infrastructure on Google Cloud Platform, it serves 1,000+ users with per-guild isolation and automated scheduling.</p>                        
+                        <p>DailyNode is an event-driven Discord bot focused on consistency and accountability, with per-server settings and scheduled workflows for daily coding prompts.</p>
                         <h3>Key Accomplishments</h3>
-                        <ul class="project-features">
+                        <ul class="project-features compact-features">
                             <li>🚀 Owned end-to-end cloud deployment of a Dockerized GCP service with resilient persistence</li>
                             <li>🔄 Architected event-driven Discord bot with automated scheduling and per-guild isolation</li>
                             <li>📈 Scaled to 1,000+ users while maintaining performance and reliability</li>
@@ -66,7 +85,7 @@
                         </ul>
 
                         <h3>Tech Stack</h3>
-                        <div class="tech-stack">
+                        <div class="tech-stack compact-tech-stack">
                             <div class="tech-category">
                                 <h4>Bot Framework</h4>
                                 <ul class="tech-list">
@@ -86,32 +105,32 @@
                     </div>
                 </div>
 
-                <div class="project-detail-right">
+                <div class="project-detail-right compact-right-column">
                     <h3>Architecture & Key Features</h3>
-                    <div class="technical-details">
+                    <div class="technical-details compact-grid">
                         <div class="tech-detail-item">
                             <h4>☁️ Cloud Deployment on GCP</h4>
-                            <p>Owned end-to-end deployment of a Dockerized service on Google Cloud Platform. Architected a resilient infrastructure with persistent storage, ensuring 99.9% uptime and seamless recovery from failures. Automated scaling handles traffic spikes from thousands of concurrent users.</p>
+                            <p>Dockerized service deployed to Google Cloud with resilient persistence and scaling behavior for bursty usage periods.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🔄 Event-Driven Architecture</h4>
-                            <p>Built an event-driven Discord bot using Discord.js that responds to user interactions with minimal latency. Leverages Discord's gateway events and webhook systems for real-time communication, enabling instant updates on user progress and achievements.</p>
+                            <p>Discord gateway events trigger low-latency bot actions for reminders, updates, and progress-driven user feedback loops.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>⚙️ Automated Scheduling</h4>
-                            <p>Implemented background job scheduling to automatically send daily reminders, track streaks, and update leaderboards. Per-guild configuration allows each Discord server to customize scheduling times and notification preferences.</p>
+                            <p>Background scheduling powers daily reminders, streak tracking, and leaderboard updates with per-guild timing controls.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🏢 Per-Guild Isolation</h4>
-                            <p>Architected multi-tenant data isolation ensuring that each Discord guild operates independently with separate user data, settings, and statistics. Prevents data leakage while efficiently sharing bot infrastructure across 1,000+ guilds.</p>
+                            <p>Multi-tenant data partitioning keeps each server's users, settings, and metrics isolated while sharing one platform runtime.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>📦 CI/CD Pipeline with GitHub Actions</h4>
-                            <p>Automated testing and deployment pipeline that triggers on every push. Runs comprehensive test suites, builds Docker images, and orchestrates deployments to GCP with zero downtime, enabling rapid iteration and reliability.</p>
+                            <p>CI/CD runs on each push to test, build, and deploy automatically, improving reliability and release speed.</p>
                         </div>
                         <div class="tech-detail-item">
                             <h4>🐳 Docker Containerization</h4>
-                            <p>Containerized the entire application with Docker for consistency across development, staging, and production environments. Enables efficient resource utilization on cloud infrastructure and simplified local development setup.</p>
+                            <p>Containerization ensures environment parity across local and production setups while simplifying operational management.</p>
                         </div>
                     </div>
                 </div>
