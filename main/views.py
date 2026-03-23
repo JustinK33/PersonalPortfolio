@@ -38,6 +38,11 @@ def gesturecontrol(request):
     return render(request, 'gesturecontrol.html')
 
 
+def linknest(request):
+    """LinkNest networking platform project page"""
+    return render(request, 'linknest.html')
+
+
 @require_http_methods(["GET"])
 def health(request):
     """Health check endpoint"""

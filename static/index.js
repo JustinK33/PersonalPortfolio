@@ -45,7 +45,7 @@ function initGsapReveal() {
     typeof window.gsap === 'undefined' ||
     typeof window.ScrollTrigger === 'undefined'
   ) {
-    return;
+    return false;
   }
 
   window.gsap.registerPlugin(window.ScrollTrigger);
@@ -126,6 +126,13 @@ function initGsapReveal() {
       );
     }
   });
+
+  return true;
+}
+
+function revealAllHiddenImmediately() {
+  const hiddenElements = document.querySelectorAll('.hidden');
+  hiddenElements.forEach((el) => el.classList.add('show'));
 }
 
 function initNavbarIndicator() {
@@ -236,12 +243,25 @@ function initHeroParallax() {
 }
 
 (async function initAnimations() {
+  // Failsafe: if external animation scripts are blocked/slow, keep content visible.
+  const revealTimeout = window.setTimeout(() => {
+    const unrevealed = document.querySelectorAll('.hidden:not(.show)');
+    if (unrevealed.length) {
+      revealAllHiddenImmediately();
+    }
+  }, 1800);
+
   try {
     await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
     await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js');
-    initGsapReveal();
+    const gsapReady = initGsapReveal();
+    if (!gsapReady) {
+      initRevealFallback();
+    }
   } catch (err) {
     initRevealFallback();
+  } finally {
+    window.clearTimeout(revealTimeout);
   }
 })();
 

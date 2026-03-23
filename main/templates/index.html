@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'responsive.css' %}">
@@ -56,7 +57,7 @@
         </div>
 
         <div class="home-img hidden">
-            <img src="{% static 'new.JPG' %}" alt="I like hiking">
+            <img src="{% static 'new.JPG' %}" alt="I like hiking" loading="eager" decoding="async" fetchpriority="high">
         </div>    
     </section>
     <section class="about" id="about">
@@ -74,53 +75,53 @@
             <div class="technologies-container">
                 <div class="tech-row">
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/springboot.png' %}" alt="Springboot" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/springboot.png' %}" alt="Springboot" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Springboot</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/mongodb.png' %}" alt="MongoDB" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/mongodb.png' %}" alt="MongoDB" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">MongoDB</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/postgre.png' %}" alt="PostgreSQL" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/postgre.png' %}" alt="PostgreSQL" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">PostgreSQL</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/tailwind.png' %}" alt="Tailwind CSS" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/tailwind.png' %}" alt="Tailwind CSS" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Tailwind CSS</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/django.png' %}" alt="Django" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/django.png' %}" alt="Django" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Django</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/fastapi.jpg' %}" alt="FastAPI" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/fastapi.jpg' %}" alt="FastAPI" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">FastAPI</span>
                     </div>
                 </div>
                 <div class="tech-row tech-row-indent">
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/rredis.jpeg' %}" alt="Redis" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/rredis.jpeg' %}" alt="Redis" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Redis</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/typescreipt.png' %}" alt="TypeScript" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/typescreipt.png' %}" alt="TypeScript" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">TypeScript</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/nginx.jpg' %}" alt="Nginx" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/nginx.jpg' %}" alt="Nginx" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Nginx</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/aws.png' %}" alt="AWS" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/aws.png' %}" alt="AWS" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">AWS</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/docker.webp' %}" alt="Docker" class="tech-logo-img" onerror="this.style.display='none'">
+                        <img src="{% static 'tech-logos/docker.webp' %}" alt="Docker" class="tech-logo-img" onerror="this.style.display='none'" loading="lazy" decoding="async">
                         <span class="tech-name">Docker</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/git.png' %}" alt="Git" class="tech-logo-img">
+                        <img src="{% static 'tech-logos/git.png' %}" alt="Git" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Git</span>
                     </div>
                 </div>
@@ -152,7 +153,7 @@
             <div class="projects-list">
                 <a href="{% url 'notetube' %}" class="project-row hidden">
                     <div class="project-thumb">
-                        <img src="{% static 'notetube-screenshot.png' %}" alt="NoteTube screenshot">
+                        <img src="{% static 'notetube-screenshot.png' %}" alt="NoteTube screenshot" loading="lazy" decoding="async">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">NoteTube</h3>
@@ -161,20 +162,20 @@
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>
 
-                <a href="{% url 'gesturecontrol' %}" class="project-row hidden">
+                <a href="{% url 'linknest' %}" class="project-row hidden">
                     <div class="project-thumb">
-                        <img src="{% static 'GestureControlIMG.png' %}" alt="Gesture Control preview">
+                        <img src="{% static 'linknestbackground.png' %}" alt="LinkNest preview" loading="lazy" decoding="async">
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title">Gesture Control</h3>
-                        <p class="project-desc">Real-time webcam CV app for face and hand tracking that maps pinch gestures to mouse movement and click actions.</p>
+                        <h3 class="project-title">LinkNest</h3>
+                        <p class="project-desc">Networking-first link-in-bio platform with multi-tenant profile URLs, resume file delivery, and analytics-first architecture.</p>
                     </div>
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>
 
                 <a href="{% url 'rumv' %}" class="project-row hidden">
                     <div class="project-thumb">
-                        <img src="{% static 'rumv-screenshot.png' %}" alt="RU My Valentine screenshot">
+                        <img src="{% static 'rumv-screenshot.png' %}" alt="RU My Valentine screenshot" loading="lazy" decoding="async">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">RU My Valentine</h3>
@@ -185,11 +186,22 @@
 
                 <a href="{% url 'dailynode' %}" class="project-row hidden">
                     <div class="project-thumb">
-                        <img src="{% static 'dailynodebanner.png' %}" alt="DailyNode logo">
+                        <img src="{% static 'dailynodebackground.png' %}" alt="DailyNode logo" loading="lazy" decoding="async">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">DailyNode</h3>
                         <p class="project-desc">Discord productivity bot with automated reminders, per-guild settings, and cloud deployment for reliable daily coding accountability.</p>
+                    </div>
+                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
+                </a>
+
+                <a href="{% url 'gesturecontrol' %}" class="project-row hidden">
+                    <div class="project-thumb">
+                        <img src="{% static 'GestureControlIMG.png' %}" alt="Gesture Control preview" loading="lazy" decoding="async">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Gesture Control</h3>
+                        <p class="project-desc">Real-time webcam CV app for face and hand tracking that maps pinch gestures to mouse movement and click actions.</p>
                     </div>
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>

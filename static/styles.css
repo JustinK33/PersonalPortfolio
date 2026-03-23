@@ -901,6 +901,60 @@ section {
   border-radius: 1.5rem;
 }
 
+.project-detail-header.project-hero {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(143, 161, 179, 0.35);
+  padding: 2rem 1.5rem;
+  background: linear-gradient(140deg, rgba(10, 14, 26, 0.8), rgba(13, 24, 45, 0.88));
+}
+
+.project-detail-header.project-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(8, 11, 20, 0.72), rgba(17, 25, 42, 0.82)),
+              var(--project-hero-image) center/cover no-repeat;
+  opacity: 0.9;
+  z-index: 0;
+}
+
+.project-detail-header.project-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.project-detail-header.notetube-hero {
+  --project-hero-image: url('notetube-screenshot.png');
+}
+
+.project-detail-header.rumv-hero {
+  --project-hero-image: url('rumv-screenshot.png');
+}
+
+.project-detail-header.dailynode-hero {
+  --project-hero-image: url('dailynodebackground.png');
+}
+
+.project-detail-header.gesture-hero {
+  --project-hero-image: url('GestureControlIMG.png');
+}
+
+.project-detail-header.linknest-hero {
+  --project-hero-image: url('linknestbackground.png');
+}
+
+.project-detail-logo.linknest-cover {
+  width: min(100%, 260px);
+  height: 120px;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
 .project-detail-header h1 {
   font-size: 4.5rem;
   font-weight: 700;
@@ -1206,6 +1260,15 @@ section {
   
   .project-tagline {
     font-size: 1.6rem;
+  }
+
+  .project-detail-header.project-hero {
+    padding: 1.6rem 1rem;
+  }
+
+  .project-detail-logo.linknest-cover {
+    width: min(100%, 220px);
+    height: 100px;
   }
   
   .project-detail-info h2 {
