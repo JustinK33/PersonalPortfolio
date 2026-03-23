@@ -59,6 +59,37 @@
 @media (max-width: 900px){
   .projects-box{ grid-template-columns: 1fr; }
   .project-card{ padding: 1.25rem; }
+
+  /* Project rows: put image above text on mobile to prevent squeezed copy */
+  .project-row{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.2rem;
+    padding: 1.4rem;
+  }
+
+  .project-thumb{
+    width: 100%;
+    height: clamp(170px, 42vw, 240px);
+  }
+
+  .project-info{
+    width: 100%;
+  }
+
+  .project-title{
+    font-size: clamp(2rem, 6vw, 2.4rem);
+  }
+
+  .project-desc{
+    font-size: 1.6rem;
+    line-height: 1.6;
+    max-width: 100%;
+  }
+
+  .project-arrow{
+    align-self: flex-end;
+  }
 }
 
 /* Contact form: stack inputs nicely */
