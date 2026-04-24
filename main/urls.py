@@ -10,4 +10,5 @@ urlpatterns = [
     path('projects/dailynode', views.dailynode, name='dailynode'),
     path('projects/gesture-control', views.gesturecontrol, name='gesturecontrol'),
     path('projects/linknest', views.linknest, name='linknest'),
+    path('projects/initra', views.initra, name='initra'),
 ]

@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'responsive.css' %}">
+
+    <title>Initra | Justin Kong Portfolio</title>
+    <link rel="icon" href="{% static 'jk.png' %}" type="image/x-icon">
+    <script src="{% static 'index.js' %}" defer></script>
+    <style>
+        .initra-hero {
+            --project-hero-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body>
+    <header class="hidden" id="header">
+        <div class="header-container">
+            <a href="{% url 'home' %}" class="logo">
+                <span>Justin Kong</span>
+            </a>
+
+            <nav class="navbar">
+                <a href="{% url 'home' %}#home">Home</a>
+                <a href="{% url 'home' %}#about">About</a>
+                <a href="{% url 'home' %}#experience">Experience</a>
+                <a href="{% url 'home' %}#projects">Projects</a>
+                <a href="{% url 'home' %}#contact">Contact</a>
+            </nav>
+
+            <a href="{% url 'home' %}#contact" class="dashboard-btn">Contact Me</a>
+            <i class="bx bx-menu" id="menu-icon"></i>
+        </div>
+    </header>
+
+    <section class="project-detail" id="project-detail">
+        <div class="project-detail-content compact-project-page">
+            <div class="project-detail-header project-hero initra-hero">
+                <h1>Initra</h1>
+                <p class="project-tagline">A cross-platform CLI for scaffolding production-ready starter projects in Python, Node.js, Ruby, and Java.</p>
+                <div class="project-detail-actions">
+                    <a href="https://github.com/JustinK33/initra" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
+                        View Repository <i class="bx bx-link-external"></i>
+                    </a>
+                    <a href="https://pypi.org/project/initra/" target="_blank" rel="noopener noreferrer" class="btn project-link-btn">
+                        PyPI Package <i class="bx bx-link-external"></i>
+                    </a>
+                    <a href="{% url 'home' %}#projects" class="btn btn-secondary">
+                        Back to Projects
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-kpis">
+                <div class="project-kpi">
+                    <span class="kpi-label">Languages</span>
+                    <span class="kpi-value">4 (Python, Node.js, Ruby, Java)</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Frameworks</span>
+                    <span class="kpi-value">13 Total</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Features</span>
+                    <span class="kpi-value">Auto setup + GitHub + VS Code</span>
+                </div>
+                <div class="project-kpi">
+                    <span class="kpi-label">Installation</span>
+                    <span class="kpi-value">pipx install initra</span>
+                </div>
+            </div>
+
+            <div class="project-detail-main compact-main-grid">
+                <div class="project-detail-left">
+                    <div class="project-detail-info">
+                        <h2>Project Overview</h2>
+                        <p>Initra is a production-grade CLI tool that scaffolds fully-configured starter projects from a single command. Whether you're building a FastAPI microservice, an Express TypeScript server, a Next.js full-stack app, or a Rails blog, Initra generates boilerplate code, initializes git repositories, creates virtual environments, and installs dependencies—all automatically.</p>
+
+                        <h3>Core Features</h3>
+                        <ul class="project-features compact-features">
+                            <li><strong>Multiple Languages & Frameworks</strong> – Flask, FastAPI, Django, Aiohttp (Python); Express, Next.js, Koa (Node.js); Rails, Sinatra (Ruby); Spring Boot, Javalin (Java)</li>
+                            <li><strong>Automatic Setup</strong> – Project directory creation, Git repository initialization, framework-specific boilerplate, language-appropriate .gitignore, dependency files, dependency installation, Python virtualenv creation</li>
+                            <li><strong>Developer Integrations</strong> – Create GitHub repositories with --gh flag, open projects in VS Code with --open flag, TypeScript support for Express, interactive prompts</li>
+                            <li><strong>Flexible Options</strong> – --ts, --gh, --public, --open, --no-install, --no-git, --dry-run, --output-dir, --json, --list</li>
+                            <li><strong>Production-Ready Output</strong> – Working starter code with health endpoints, comprehensive README, test directories, Git commits</li>
+                        </ul>
+
+                        <h3>Supported Stacks</h3>
+                        <div class="tech-stack compact-tech-stack">
+                            <div class="tech-category">
+                                <h4>Python</h4>
+                                <ul class="tech-list">
+                                    <li>Flask – Lightweight</li>
+                                    <li>FastAPI – Modern, async</li>
+                                    <li>Django – Full-featured</li>
+                                    <li>Aiohttp – Async framework</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <h4>Node.js</h4>
+                                <ul class="tech-list">
+                                    <li>Express (JS/TS)</li>
+                                    <li>Next.js</li>
+                                    <li>Koa</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <h4>Ruby</h4>
+                                <ul class="tech-list">
+                                    <li>Rails</li>
+                                    <li>Sinatra</li>
+                                </ul>
+                            </div>
+                            <div class="tech-category">
+                                <h4>Java</h4>
+                                <ul class="tech-list">
+                                    <li>Spring Boot</li>
+                                    <li>Javalin</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-detail-right compact-right-column">
+                    <h3>Quick Start Examples</h3>
+                    <div class="technical-details compact-grid">
+                        <div class="tech-detail-item">
+                            <h4>FastAPI REST API</h4>
+                            <p><code>initra myapi python fastapi</code></p>
+                            <p>Auto-configured with virtual environment, automatic dependency installation, ready to run with uvicorn.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>TypeScript Express + GitHub</h4>
+                            <p><code>initra api node express --ts --gh --open</code></p>
+                            <p>Scaffold with TypeScript, create GitHub repo, and open in VS Code instantly.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Next.js Full-Stack</h4>
+                            <p><code>initra webapp node next --gh --open</code></p>
+                            <p>Full-stack React with server-side rendering, GitHub integration, and immediate development setup.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Spring Boot Microservice</h4>
+                            <p><code>initra service java springboot</code></p>
+                            <p>Enterprise-grade microservice scaffold with Maven, dependencies pre-configured.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Rails Blog</h4>
+                            <p><code>initra blog ruby rails</code></p>
+                            <p>Full Rails app with database migrations, asset pipeline, testing framework.</p>
+                        </div>
+                        <div class="tech-detail-item">
+                            <h4>Dry-Run Preview</h4>
+                            <p><code>initra project python fastapi --dry-run</code></p>
+                            <p>Preview exactly what will be created without writing any files.</p>
+                        </div>
+                    </div>
+
+                    <h3>Installation</h3>
+                    <div class="installation-methods compact-grid">
+                        <div class="installation-option">
+                            <h4>Recommended</h4>
+                            <div class="code-block">pipx install initra</div>
+                        </div>
+                        <div class="installation-option">
+                            <h4>Alternative</h4>
+                            <div class="code-block">python3 -m pip install initra</div>
+                        </div>
+                    </div>
+
+                    <h3>Command Format</h3>
+                    <div class="command-format">
+                        <div class="code-block">initra &lt;name&gt; &lt;language&gt; &lt;framework&gt; [options]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .installation-option {
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .installation-option h4 {
+            margin: 0 0 0.75rem 0;
+            font-size: 0.95rem;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-block {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+            border-left: 3px solid #667eea;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .command-format {
+            padding: 1.5rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 8px;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .command-format .code-block {
+            margin: 0;
+            border-left-color: #764ba2;
+        }
+    </style>
+
+    <footer class="hidden" id="footer">
+        <div class="social-icons">
+            <a href="https://github.com/JustinK33" target="_blank">
+                <i class="bx bxl-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/justin-hkong/" target="_blank">
+                <i class="bx bxl-linkedin-square"></i>
+            </a>
+            <a href="https://www.instagram.com/justin.hyun/" target="_blank">
+                <i class="bx bxl-instagram-alt"></i>
+            </a>
+        </div>
+        <p class="copyright">
+            © Justin Kong | All Rights Reserved
+        </p>
+    </footer>
+</body>
+</html>

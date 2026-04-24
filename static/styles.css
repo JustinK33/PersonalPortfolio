@@ -946,6 +946,10 @@ section {
   --project-hero-image: url('linknestbackground.png');
 }
 
+.project-detail-header.initra-hero {
+  --project-hero-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 .project-detail-logo.linknest-cover {
   width: min(100%, 260px);
   height: 120px;

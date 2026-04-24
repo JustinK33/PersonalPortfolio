@@ -43,6 +43,11 @@ def linknest(request):
     return render(request, 'linknest.html')
 
 
+def initra(request):
+    """Initra CLI scaffolding tool project page"""
+    return render(request, 'initra.html')
+
+
 @require_http_methods(["GET"])
 def health(request):
     """Health check endpoint"""
