@@ -1081,23 +1081,23 @@ section {
 }
 
 .project-detail-header.notetube-hero {
-  --project-hero-image: url('notetube-screenshot.png');
+  --project-hero-image: url("notetube-screenshot.df7ec4bac9cc.png");
 }
 
 .project-detail-header.rumv-hero {
-  --project-hero-image: url('rumv-screenshot.png');
+  --project-hero-image: url("rumv-screenshot.831bcde4e100.png");
 }
 
 .project-detail-header.dailynode-hero {
-  --project-hero-image: url('dailynodebackground.png');
+  --project-hero-image: url("dailynodebackground.2feffc89908c.png");
 }
 
 .project-detail-header.gesture-hero {
-  --project-hero-image: url('GestureControlIMG.png');
+  --project-hero-image: url("GestureControlIMG.76327fc38b7a.png");
 }
 
 .project-detail-header.linknest-hero {
-  --project-hero-image: url('linknestbackground.png');
+  --project-hero-image: url("linknestbackground.2ac94d50cd76.png");
 }
 
 .project-detail-header.initra-hero {

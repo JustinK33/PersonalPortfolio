@@ -45,7 +45,7 @@ function initGsapReveal() {
     typeof window.gsap === 'undefined' ||
     typeof window.ScrollTrigger === 'undefined'
   ) {
-    return;
+    return false;
   }
 
   window.gsap.registerPlugin(window.ScrollTrigger);
@@ -126,6 +126,13 @@ function initGsapReveal() {
       );
     }
   });
+
+  return true;
+}
+
+function revealAllHiddenImmediately() {
+  const hiddenElements = document.querySelectorAll('.hidden');
+  hiddenElements.forEach((el) => el.classList.add('show'));
 }
 
 function initNavbarIndicator() {
@@ -188,25 +195,36 @@ function initNavbarIndicator() {
   });
 
   const sections = Array.from(sectionToLink.keys());
-  if (sections.length) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (!visible) return;
-        const activeLink = sectionToLink.get(visible.target);
-        if (activeLink) setActiveLink(activeLink);
-      },
-      { threshold: [0.35, 0.55, 0.75], rootMargin: '-20% 0px -55% 0px' }
-    );
-
-    sections.forEach((section) => sectionObserver.observe(section));
+  function updateActiveFromScroll() {
+    if (!sections.length) return;
+    const probe = window.scrollY + window.innerHeight * 0.35;
+    let current = sections[0];
+    for (const section of sections) {
+      if (section.offsetTop <= probe) current = section;
+    }
+    const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (nearBottom) current = sections[sections.length - 1];
+    const activeLink = sectionToLink.get(current);
+    if (activeLink && !activeLink.classList.contains('is-active')) {
+      setActiveLink(activeLink);
+    }
   }
+
+  let scrollScheduled = false;
+  window.addEventListener('scroll', () => {
+    if (scrollScheduled) return;
+    scrollScheduled = true;
+    requestAnimationFrame(() => {
+      updateActiveFromScroll();
+      scrollScheduled = false;
+    });
+  }, { passive: true });
 
   const initialActive = navbar.querySelector('a.is-active') || navLinks[0];
   setActiveLink(initialActive);
+  updateActiveFromScroll();
+
   window.addEventListener('resize', () => {
     const active = navbar.querySelector('a.is-active') || navLinks[0];
     moveIndicatorTo(active);
@@ -236,12 +254,25 @@ function initHeroParallax() {
 }
 
 (async function initAnimations() {
+  // Failsafe: if external animation scripts are blocked/slow, keep content visible.
+  const revealTimeout = window.setTimeout(() => {
+    const unrevealed = document.querySelectorAll('.hidden:not(.show)');
+    if (unrevealed.length) {
+      revealAllHiddenImmediately();
+    }
+  }, 1800);
+
   try {
     await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
     await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js');
-    initGsapReveal();
+    const gsapReady = initGsapReveal();
+    if (!gsapReady) {
+      initRevealFallback();
+    }
   } catch (err) {
     initRevealFallback();
+  } finally {
+    window.clearTimeout(revealTimeout);
   }
 })();
 

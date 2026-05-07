@@ -195,36 +195,25 @@ function initNavbarIndicator() {
   });
 
   const sections = Array.from(sectionToLink.keys());
+  if (sections.length) {
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-  function updateActiveFromScroll() {
-    if (!sections.length) return;
-    const probe = window.scrollY + window.innerHeight * 0.35;
-    let current = sections[0];
-    for (const section of sections) {
-      if (section.offsetTop <= probe) current = section;
-    }
-    const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-    if (nearBottom) current = sections[sections.length - 1];
-    const activeLink = sectionToLink.get(current);
-    if (activeLink && !activeLink.classList.contains('is-active')) {
-      setActiveLink(activeLink);
-    }
+        if (!visible) return;
+        const activeLink = sectionToLink.get(visible.target);
+        if (activeLink) setActiveLink(activeLink);
+      },
+      { threshold: [0.35, 0.55, 0.75], rootMargin: '-20% 0px -55% 0px' }
+    );
+
+    sections.forEach((section) => sectionObserver.observe(section));
   }
-
-  let scrollScheduled = false;
-  window.addEventListener('scroll', () => {
-    if (scrollScheduled) return;
-    scrollScheduled = true;
-    requestAnimationFrame(() => {
-      updateActiveFromScroll();
-      scrollScheduled = false;
-    });
-  }, { passive: true });
 
   const initialActive = navbar.querySelector('a.is-active') || navLinks[0];
   setActiveLink(initialActive);
-  updateActiveFromScroll();
-
   window.addEventListener('resize', () => {
     const active = navbar.querySelector('a.is-active') || navLinks[0];
     moveIndicatorTo(active);

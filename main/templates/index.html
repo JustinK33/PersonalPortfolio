@@ -31,11 +31,15 @@
 
     <section class="home" id="home">
         <div class="home-content">
-            <h1 class="hidden">Hi, It's <span>Justin</span></h1>
+            <span class="availability-pill hidden">
+                <span class="availability-dot" aria-hidden="true"></span>
+                Open to Summer 2026 SWE Internships
+            </span>
+            <h1 class="hidden">Hi, I'm <span>Justin</span></h1>
             <h3 class="hidden">
-                I'm a <span>Second-year student at Rutgers Unitveristy</span>
+                I build <span>backend &amp; distributed systems</span>
             </h3>
-            <p class="hidden">Software Engineer | Computer Science @ Rutgers University</p>
+            <p class="hidden">Computer Science @ Rutgers University</p>
             <div class="social-icons hidden">
                 <a href="https://github.com/JustinK33" target="_blank" class="hidden">
                     <i class="bx bxl-github"></i>
@@ -137,7 +141,18 @@
                     <div class="experience-left">
                         <h3 class="company-large">Deepiri - Software Engineer Intern</h3>
                         <p class="experience-summary">As a Software Engineering Intern, I contributed to strengthening the performance, scalability, and reliability of backend systems within a distributed architecture. I worked on improving how services handled high traffic, failures, and real-world production load while increasing system observability. My role focused on building resilient infrastructure that could scale efficiently and operate reliably under pressure.</p>
-                        <p class="experience-dates">Nov 2025 — May 2026 · Pittsburgh, PA (Remote)</p>
+                        <p class="experience-dates">Nov 2025 — May 2026 · Pittsburgh, PA</p>
+                    </div>
+                    <div class="experience-right">
+                        <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
+                    </div>
+                </a>
+
+                <a class="experience-row hidden" href="https://outamation.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="experience-left">
+                        <h3 class="company-large">Outamation (Extern) - AI/ML Engineer Extern</h3>
+                        <p class="experience-summary">As an AI/ML Engineering Extern, I built an end-to-end document intelligence system for large, unstructured mortgage PDFs. I focused on layout-aware OCR extraction and Retrieval-Augmented Generation pipelines that enable semantic search and Q&amp;A over complex documents, then wrapped the final system in an interactive chatbot for real-world mortgage automation use cases.</p>
+                        <p class="experience-dates">Oct 2025 — Dec 2025 · Remote</p>
                     </div>
                     <div class="experience-right">
                         <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
@@ -220,33 +235,50 @@
         </div>
     </section>
 
-    <section class="hidden" id="contact">
-        <h2 class="heading">Contact <span>Me</span></h2>
-
-        <form id="contact-form" action="/api/contact" method="POST" novalidate>
-            {% csrf_token %}
-
-            <div class="input-group">
-                <div class="input-box">
-                    <input type="text" name="name" placeholder="Full Name" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="input-box">
-                    <input type="number" name="phone" placeholder="Phone Number">
-                    <input type="text" name="subject" placeholder="Subject" required>
-                </div>
+    <section class="hidden contact-section" id="contact">
+        <div class="contact-inner">
+            <div class="contact-header">
+                <h2 class="heading">Get in <span>Touch</span></h2>
+                <p class="contact-sub">Have a role, project, or idea you'd like to discuss? Drop me a message and I'll get back to you.</p>
             </div>
 
-            <div class="input-group2">
-                <textarea name="message" placeholder="Your Message" rows="10" required></textarea>
-                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
-                        style="position:absolute;left:-10000px;opacity:0">
+            <form id="contact-form" class="contact-form" action="/api/contact" method="POST" novalidate>
+                {% csrf_token %}
 
-                <button type="submit" class="btn" id="contact-submit">Send Message</button>
-                <p id="form-status" aria-live="polite" style="margin-top:1rem;"></p>
-            </div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="cf-name">Full Name</label>
+                        <input id="cf-name" type="text" name="name" placeholder="Jane Doe" autocomplete="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="cf-email">Email</label>
+                        <input id="cf-email" type="email" name="email" placeholder="jane@example.com" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="cf-phone">Phone <span class="field-optional">(optional)</span></label>
+                        <input id="cf-phone" type="tel" name="phone" placeholder="+1 (555) 555-5555" autocomplete="tel">
+                    </div>
+                    <div class="field">
+                        <label for="cf-subject">Subject</label>
+                        <input id="cf-subject" type="text" name="subject" placeholder="What's this about?" required>
+                    </div>
+                    <div class="field field-full">
+                        <label for="cf-message">Message</label>
+                        <textarea id="cf-message" name="message" placeholder="Tell me a bit about what you're working on..." rows="6" required></textarea>
+                    </div>
+                </div>
 
-        </form>
+                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp-field">
+
+                <div class="form-actions">
+                    <button type="submit" class="contact-submit-btn" id="contact-submit">
+                        <span>Send Message</span>
+                        <i class='bx bx-right-arrow-alt'></i>
+                    </button>
+                    <p id="form-status" aria-live="polite" class="form-status"></p>
+                </div>
+            </form>
+        </div>
     </section>
 
     <footer class="hidden" id="footer">
