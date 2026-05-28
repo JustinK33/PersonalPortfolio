@@ -513,10 +513,6 @@ section {
   background: #336791;
 }
 
-.tailwind-logo {
-  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-}
-
 .django-logo {
   background: #092e20;
   border: 1px solid #0c4e33;
