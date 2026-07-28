@@ -18,36 +18,6 @@ def home(request):
     return render(request, 'index.html')
 
 
-def notetube(request):
-    """NoteTube project page"""
-    return render(request, 'notetube.html')
-
-
-def rumv(request):
-    """RU My Valentine project page"""
-    return render(request, 'rumv.html')
-
-
-def dailynode(request):
-    """DailyNode Discord bot project page"""
-    return render(request, 'dailynode.html')
-
-
-def gesturecontrol(request):
-    """Gesture Control computer vision project page"""
-    return render(request, 'gesturecontrol.html')
-
-
-def linknest(request):
-    """LinkNest networking platform project page"""
-    return render(request, 'linknest.html')
-
-
-def initra(request):
-    """Initra CLI scaffolding tool project page"""
-    return render(request, 'initra.html')
-
-
 @require_http_methods(["GET"])
 def health(request):
     """Health check endpoint"""

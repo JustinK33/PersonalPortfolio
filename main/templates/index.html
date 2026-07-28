@@ -33,13 +33,13 @@
         <div class="home-content">
             <span class="availability-pill hidden">
                 <span class="availability-dot" aria-hidden="true"></span>
-                Open to Summer 2026 SWE Internships
+                Open to Summer 2027 SWE & DS Internships
             </span>
             <h1 class="hidden">Hi, I'm <span>Justin</span></h1>
             <h3 class="hidden">
                 I build <span>backend &amp; distributed systems</span>
             </h3>
-            <p class="hidden">Computer Science @ Rutgers University</p>
+            <p class="hidden">Computer & Data Science @ Rutgers University</p>
             <div class="social-icons hidden">
                 <a href="https://github.com/JustinK33" target="_blank" class="hidden">
                     <i class="bx bxl-github"></i>
@@ -68,14 +68,14 @@
         <div class="about-content">
             <h2 class="hidden">About <span>Me</span></h2>
             <div class="about-text hidden">
-                <p>Computer Science Junior at Rutgers with a focus on backend and distributed systems. The deeper I get into these systems, the more I want to understand what's happening underneath — how data stays consistent, how things fail gracefully, and how you design for load you can't fully predict.</p>
-                <p>My internship experience was mostly building and shipping backend features end to end. That's where I started caring about the harder questions: what breaks at scale, and why. I got comfortable with the gap between "it works" and "it works reliably."</p>
-                <p>Right now I'm drawn to problems around fault tolerance, consistency, and system design — not just implementing features, but understanding the tradeoffs behind the decisions that make a system actually hold up in production.</p>
+                <p>I'm a Computer and Data Science student at Rutgers, focused on backend development and distributed systems. During my internship I built and shipped backend features end to end, which is where I started paying attention to what breaks at scale and why. There's a real gap between code that works and code that holds up under real conditions, and that gap is what I find interesting now.</p>
+                <p>I'm mostly interested in fault tolerance, consistency, and system design: how data stays correct when things go wrong, how systems degrade instead of collapsing, and how you plan for load you can't fully predict ahead of time.</p>
+                <p>Outside of school and code, I box, play basketball, volleyball, and pickleball, and pick up the guitar when I want to slow down. I'm also someone who needs regular walks with music in my ears to think clearly, and I make time for my friends whenever I can. It keeps me balanced against the hours I spend heads down in a terminal.</p>
             </div>
         </div>
 
         <div class="technologies-section hidden">
-            <h3 class="technologies-heading">Using the latest <span class="fade-text">technologies, I develop</span></h3>
+            <h3 class="technologies-heading">I develop <span class="fade-text">using the latest technologies</span></h3>
             <div class="technologies-container">
                 <div class="tech-row">
                     <div class="tech-item">
@@ -87,12 +87,16 @@
                         <span class="tech-name">Golang</span>
                     </div>
                     <div class="tech-item">
-                        <img src="{% static 'tech-logos/django.png' %}" alt="Django" class="tech-logo-img" loading="lazy" decoding="async">
-                        <span class="tech-name">Django</span>
-                    </div>
-                    <div class="tech-item">
                         <img src="{% static 'tech-logos/fastapi.jpg' %}" alt="FastAPI" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">FastAPI</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="{% static 'tech-logos/kubernetes.webp' %}" alt="Kubernetes" class="tech-logo-img" loading="lazy" decoding="async">
+                        <span class="tech-name">Kubernetes</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="{% static 'tech-logos/kafka.png' %}" alt="Kafka" class="tech-logo-img" loading="lazy" decoding="async">
+                        <span class="tech-name">Kafka</span>
                     </div>
                 </div>
                 <div class="tech-row tech-row-indent">
@@ -128,6 +132,10 @@
                         <img src="{% static 'tech-logos/git.png' %}" alt="Git" class="tech-logo-img" loading="lazy" decoding="async">
                         <span class="tech-name">Git</span>
                     </div>
+                    <div class="tech-item">
+                        <img src="{% static 'tech-logos/redpanda.avif' %}" alt="Redpanda" class="tech-logo-img" loading="lazy" decoding="async">
+                        <span class="tech-name">Redpanda</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,7 +149,17 @@
                     <div class="experience-left">
                         <h3 class="company-large">Myntlo - Founder</h3>
                         <p class="experience-summary">At Myntlo, we believe every conversation should create clarity, momentum, and action. Our mission is to help people and teams turn meetings into meaningful progress by bringing important ideas, decisions, and next steps back into focus. We build with simplicity, speed, and trust in mind, helping teams stay aligned and move forward with confidence. Together, we can turn meetings into momentum.</p>
-                        <p class="experience-dates">May 2026 — Present · Little Ferry, NJ</p>
+                        <p class="experience-dates">May 2026 - Present · Little Ferry, NJ</p>
+                    </div>
+                    <div class="experience-right">
+                        <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
+                    </div>
+                </a>
+                <a class="experience-row hidden" href="http://arka.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="experience-left">
+                        <h3 class="company-large">Arka - Software Engineer Intern</h3>
+                        <p class="experience-summary">As an Arka Software Engineer Intern, I own and execute backend infrastructure tickets supporting Arka's core platform, from investigating system failures to architecting fixes and validating outcomes in production. My work includes building Postgres-backed job reliability systems, such as a stale-job reaper with automated requeue logic, and hardening webhook delivery through retry-with-backoff and persistent delivery logging, focusing on correctness and reliability across distributed backend services.</p>
+                        <p class="experience-dates">June 2026 - August 2026 · Austin, Texas</p>
                     </div>
                     <div class="experience-right">
                         <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
@@ -151,7 +169,7 @@
                     <div class="experience-left">
                         <h3 class="company-large">Deepiri - Software Engineer Intern</h3>
                         <p class="experience-summary">As a Software Engineering Intern, I contributed to strengthening the performance, scalability, and reliability of backend systems within a distributed architecture. I worked on improving how services handled high traffic, failures, and real-world production load while increasing system observability. My role focused on building resilient infrastructure that could scale efficiently and operate reliably under pressure.</p>
-                        <p class="experience-dates">Nov 2025 — May 2026 · Pittsburgh, PA</p>
+                        <p class="experience-dates">Nov 2025 - May 2026 · Pittsburgh, PA</p>
                     </div>
                     <div class="experience-right">
                         <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
@@ -162,7 +180,7 @@
                     <div class="experience-left">
                         <h3 class="company-large">Outamation (Extern) - AI/ML Engineer Extern</h3>
                         <p class="experience-summary">As an AI/ML Engineering Extern, I built an end-to-end document intelligence system for large, unstructured mortgage PDFs. I focused on layout-aware OCR extraction and Retrieval-Augmented Generation pipelines that enable semantic search and Q&amp;A over complex documents, then wrapped the final system in an interactive chatbot for real-world mortgage automation use cases.</p>
-                        <p class="experience-dates">Oct 2025 — Dec 2025 · Remote</p>
+                        <p class="experience-dates">Oct 2025 - Dec 2025 · Remote</p>
                     </div>
                     <div class="experience-right">
                         <div class="experience-arrow" aria-hidden="true"><i class="bx bx-up-right"></i></div>
@@ -176,7 +194,7 @@
         <div class="projects-inner">
             <h2 class="projects-giant hidden">PROJECTS</h2>
             <div class="projects-list">
-                <a href="{% url 'notetube' %}" class="project-row hidden">
+                <a href="https://github.com/JustinK33/NoteTube" target="_blank" rel="noopener noreferrer" class="project-row hidden">
                     <div class="project-thumb">
                         <img src="{% static 'notetube-screenshot.png' %}" alt="NoteTube screenshot" loading="lazy" decoding="async">
                     </div>
@@ -187,18 +205,51 @@
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>
 
-                <a href="{% url 'linknest' %}" class="project-row hidden">
+                <a href="https://github.com/JustinK33/LinkNest" target="_blank" rel="noopener noreferrer" class="project-row hidden">
                     <div class="project-thumb">
                         <img src="{% static 'linknestbackground.png' %}" alt="LinkNest preview" loading="lazy" decoding="async">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title">LinkNest</h3>
-                        <p class="project-desc">Networking-first link-in-bio platform with multi-tenant profile URLs, resume file delivery, and analytics-first architecture.</p>
+                        <p class="project-desc">Go and PostgreSQL link-in-bio service with custom profiles, idempotent click ingestion, append-only event logging, and hourly/daily analytics rollups.</p>
                     </div>
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>
 
-                <a href="{% url 'rumv' %}" class="project-row hidden">
+                <a href="https://github.com/JustinK33/Conduit" target="_blank" rel="noopener noreferrer" class="project-row hidden">
+                    <div class="project-thumb">
+                        <img src="{% static 'coming.webp' %}" alt="Conduit distributed task queue preview" loading="lazy" decoding="async">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Conduit</h3>
+                        <p class="project-desc">Production-inspired distributed task queue in Go with Kafka transport, PostgreSQL job state, Redis locking, retries, lease recovery, and Prometheus observability.</p>
+                    </div>
+                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
+                </a>
+
+                <a href="https://github.com/JustinK33/RiskScore" target="_blank" rel="noopener noreferrer" class="project-row hidden">
+                    <div class="project-thumb">
+                        <img src="{% static 'riskscore-dashboard.png' %}" alt="RiskScore model dashboard screenshot" loading="lazy" decoding="async">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">RiskScore</h3>
+                        <p class="project-desc">Leakage-aware credit default risk pipeline using Lending Club data, time-based validation, calibration analysis, XGBoost, SHAP, and reproducible reports.</p>
+                    </div>
+                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
+                </a>
+
+                <a href="https://github.com/JustinK33/Pulsegrid" target="_blank" rel="noopener noreferrer" class="project-row hidden">
+                    <div class="project-thumb">
+                        <img src="{% static 'instaapi.jpg' %}" alt="Pulsegrid event pipeline preview" loading="lazy" decoding="async">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Pulsegrid</h3>
+                        <p class="project-desc">Redpanda-backed event pipeline that streams CSV events through Kafka-compatible producers and consumers into PostgreSQL with validation and dead-letter handling.</p>
+                    </div>
+                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
+                </a>
+
+                <a href="https://github.com/Tylerrs1423/RUMyValentineV2" target="_blank" rel="noopener noreferrer" class="project-row hidden">
                     <div class="project-thumb">
                         <img src="{% static 'rumv-screenshot.png' %}" alt="RU My Valentine screenshot" loading="lazy" decoding="async">
                     </div>
@@ -209,7 +260,7 @@
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>
 
-                <a href="{% url 'dailynode' %}" class="project-row hidden">
+                <a href="https://github.com/JustinK33/DailyNode" target="_blank" rel="noopener noreferrer" class="project-row hidden">
                     <div class="project-thumb">
                         <img src="{% static 'dailynodebackground.png' %}" alt="DailyNode logo" loading="lazy" decoding="async">
                     </div>
@@ -220,18 +271,7 @@
                     <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
                 </a>
 
-                <a href="{% url 'gesturecontrol' %}" class="project-row hidden">
-                    <div class="project-thumb">
-                        <img src="{% static 'GestureControlIMG.png' %}" alt="Gesture Control preview" loading="lazy" decoding="async">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Gesture Control</h3>
-                        <p class="project-desc">Real-time webcam CV app for face and hand tracking that maps pinch gestures to mouse movement and click actions.</p>
-                    </div>
-                    <div class="project-arrow"><i class="bx bx-up-arrow-alt bx-rotate-45"></i></div>
-                </a>
-
-                <a href="{% url 'initra' %}" class="project-row hidden">
+                <a href="https://github.com/JustinK33/initra" target="_blank" rel="noopener noreferrer" class="project-row hidden">
                     <div class="project-thumb">
                         <img src="{% static 'initra.png' %}" alt="Initra preview" loading="lazy" decoding="async">
                     </div>

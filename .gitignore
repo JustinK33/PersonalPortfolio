@@ -1,1 +1,4 @@
 venv/
+.agents
+.claude
+db.sqlite3
