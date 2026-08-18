@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!-- Dev check harness. Open in a browser, or:
+       chrome --headless=new --allow-file-access-from-files \
+         --virtual-time-budget=9000 --dump-dom check.html
+     Covers the two pieces of real logic (menu toggle, clipboard copy) plus the
+     accessibility and no-hidden-content guarantees. -->
+<html><head><meta charset="utf-8"></head><body>
+<iframe id="f" src="index.html" width="1200" height="900" style="border:0"></iframe>
+<pre id="out"></pre>
+<script>
+const results = [];
+const ok = (name, pass, extra = '') => results.push(`${pass ? 'PASS' : 'FAIL'} ${name}${extra ? ' :: ' + extra : ''}`);
+
+document.getElementById('f').onload = async () => {
+  const d = f.contentDocument, w = f.contentWindow;
+
+  // --- no content is hidden anywhere ---------------------------------------
+  // The regression this guards: the previous build hid whole sections at
+  // opacity 0 and relied on JS to bring them back. Text must never depend on a
+  // script having run, so kill animations and assert nothing is invisible.
+  const s = d.createElement('style');
+  s.textContent = '*{animation:none !important;transition:none !important}';
+  d.head.appendChild(s);
+  await new Promise(r => setTimeout(r, 100));
+
+  const invisible = [...d.querySelectorAll('main *, footer *')].filter((e) => {
+    if (!e.textContent.trim()) return false;
+    const c = w.getComputedStyle(e);
+    return c.opacity === '0' || c.visibility === 'hidden' || c.display === 'none';
+  });
+  ok('no text content is hidden', invisible.length === 0,
+    invisible.map(e => e.tagName + '.' + e.className).slice(0, 5).join(' | '));
+
+  // Section landmarks must have real height, i.e. they actually laid out.
+  const empty = ['about', 'tech', 'experience', 'projects', 'contact']
+    .filter(id => d.getElementById(id).getBoundingClientRect().height < 100);
+  ok('every section has laid out', empty.length === 0, empty.join(','));
+
+  // --- menu toggle ---------------------------------------------------------
+  const toggle = d.getElementById('menu-toggle'), nav = d.getElementById('primary-nav');
+  ok('menu toggle is a real button', toggle.tagName === 'BUTTON');
+  ok('aria-controls points at the nav', d.getElementById(toggle.getAttribute('aria-controls')) === nav);
+  toggle.click();
+  ok('click opens: aria-expanded=true', toggle.getAttribute('aria-expanded') === 'true');
+  ok('click opens: nav gets .is-open', nav.classList.contains('is-open'));
+  toggle.click();
+  ok('click closes again', toggle.getAttribute('aria-expanded') === 'false' && !nav.classList.contains('is-open'));
+  toggle.click();
+  d.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  ok('Escape closes the menu', toggle.getAttribute('aria-expanded') === 'false');
+
+  // --- copy button ---------------------------------------------------------
+  const btn = d.getElementById('copy-email');
+  const expected = btn.dataset.email;
+  ok('email in markup matches the copy target',
+    d.getElementById('email-link').textContent.trim() === expected, expected);
+  ok('mailto href matches', d.getElementById('email-link').getAttribute('href') === 'mailto:' + expected);
+
+  let written = null;
+  Object.defineProperty(w.navigator, 'clipboard', {
+    configurable: true,
+    value: { writeText: t => { written = t; return Promise.resolve(); } }
+  });
+  btn.click();
+  await new Promise(r => setTimeout(r, 50));
+  ok('copy writes the address to the clipboard', written === expected, String(written));
+  ok('copy shows confirmed state', btn.classList.contains('is-copied'));
+  ok('copy announces via live region', d.getElementById('copy-status').textContent.includes(expected));
+
+  // --- links ---------------------------------------------------------------
+  const bad = [...d.querySelectorAll('a[href]')].filter(a => {
+    const h = a.getAttribute('href');
+    return !h || h === '#' || h.trim() === '';
+  });
+  ok('no placeholder href="#" links', bad.length === 0, bad.map(a => a.textContent.trim()).join(','));
+
+  const extern = [...d.querySelectorAll('a[target="_blank"]')];
+  const unsafe = extern.filter(a => !(a.getAttribute('rel') || '').includes('noopener'));
+  ok('every external link has rel=noopener', unsafe.length === 0, unsafe.length + ' missing');
+
+  const unnamed = [...d.querySelectorAll('a')].filter(
+    a => !a.textContent.trim() && !a.getAttribute('aria-label'));
+  ok('no icon-only link is left unnamed', unnamed.length === 0, unnamed.length + ' unnamed');
+
+  // --- structure -----------------------------------------------------------
+  ok('exactly one <h1>', d.querySelectorAll('h1').length === 1);
+  ok('has <main>', !!d.querySelector('main'));
+  ok('has a skip link to #main', d.querySelector('.skip-link')?.getAttribute('href') === '#main');
+
+  const noDims = [...d.querySelectorAll('img')].filter(i => !i.getAttribute('width') || !i.getAttribute('height'));
+  ok('every img declares width/height', noDims.length === 0, noDims.length + ' missing');
+
+  const noAlt = [...d.querySelectorAll('img')].filter(i => i.getAttribute('alt') === null);
+  ok('every img has an alt attribute', noAlt.length === 0, noAlt.length + ' missing');
+
+  // --- focusability --------------------------------------------------------
+  const focusable = [...d.querySelectorAll('a[href], button')].filter(el => el.offsetParent !== null);
+  const unfocusable = focusable.filter(el => { el.focus(); return d.activeElement !== el; });
+  ok('every rendered link and button can take focus', unfocusable.length === 0,
+    unfocusable.map(e => e.tagName + '.' + e.className).join(' | '));
+
+  document.getElementById('out').textContent = results.join('\n');
+  document.title = results.some(r => r.startsWith('FAIL')) ? 'SOME FAILED' : 'ALL PASS';
+  console.log(results.join('\n'));
+};
+</script></body></html>
