@@ -171,9 +171,22 @@
   <section class="projects" id="projects" aria-labelledby="projects-heading">
     <div class="projects-inner">
       <h2 class="section-giant" id="projects-heading">Projects</h2>
-      <!-- TODO Justin: each card has room for one concrete result (throughput, p99, rows/sec).
-           Add it as <p class="project-metric"> once you have a real measured number. -->
+      <!-- Belady carries its measured numbers inline in the description, the same way the
+           counts on the other cards do. Conduit has a published p99 table too and is next in
+           line for the same treatment; the rest have nothing measured worth quoting yet. -->
       <ul class="projects-list">
+
+        <li>
+          <a class="project-row" href="https://github.com/JustinK33/Belady" target="_blank" rel="noopener noreferrer">
+            <span class="project-thumb"><img src="static/belady.webp" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
+            <span class="project-info">
+              <h3>Belady</h3>
+              <p>Distributed cache in Go whose eviction policy is a learned approximation of Belady's provably optimal algorithm: a LightGBM model trained on sampled access traces predicts which cached object is reused furthest in the future, and the registry streams new models to live nodes that install them without a restart. Beats sampled LRU 0.8702 to 0.8636 on object hit ratio across a three-node cluster, closing 9.4% of the remaining gap to optimal, with model scoring held to roughly 0.5 µs per eviction.</p>
+              <span class="tags"><span>Go</span><span>gRPC</span><span>Protobuf</span><span>Python</span><span>LightGBM</span><span>Prometheus</span><span>Grafana</span><span>Docker Compose</span></span>
+            </span>
+            <span class="row-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+          </a>
+        </li>
 
         <li>
           <a class="project-row" href="https://github.com/JustinK33/Conduit" target="_blank" rel="noopener noreferrer">
@@ -204,7 +217,7 @@
             <span class="project-thumb"><img src="static/pulsegrid.webp" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
             <span class="project-info">
               <h3>Pulsegrid</h3>
-              <p>Event pipeline that streams clickstream records through a Redpanda topic into Postgres, with Pydantic validation on every message, batched inserts, and a dead-letter table for anything that fails to parse. An Airflow DAG orchestrates the stages and rebuilds a curated SQL analytics layer on every run.</p>
+              <p>Streaming ingest pipeline built so a malformed record cannot stall the stream or corrupt the warehouse: every message off the Redpanda topic is validated with Pydantic, writes to Postgres are batched, and anything that fails to parse lands in a dead-letter table instead of the pipeline. An Airflow DAG orchestrates the stages and rebuilds a curated SQL analytics layer on every run.</p>
               <span class="tags"><span>Python</span><span>Redpanda</span><span>Kafka</span><span>PostgreSQL</span><span>Apache Airflow</span><span>SQL</span><span>Pydantic</span></span>
             </span>
             <span class="row-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
@@ -216,44 +229,8 @@
             <span class="project-thumb"><img src="static/notetube.webp" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
             <span class="project-info">
               <h3>NoteTube</h3>
-              <p>Turns YouTube videos and audio into structured notes. Celery workers move the 30-150 second transcription and embedding pipelines off the request path, a dedicated content service talks over gRPC, and semantic search runs on pgvector.</p>
+              <p>Note generation service built around keeping slow work off the request path: Celery workers absorb the 30-150 second transcription and embedding pipelines, a separate content service talks over gRPC, and semantic search runs on pgvector rather than a second datastore. The product turns YouTube videos and audio into structured, searchable notes.</p>
               <span class="tags"><span>Python</span><span>Django</span><span>Celery</span><span>gRPC</span><span>pgvector</span><span>AWS</span><span>Live: notetube.dev</span></span>
-            </span>
-            <span class="row-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
-          </a>
-        </li>
-
-        <li>
-          <a class="project-row" href="https://github.com/JustinK33/RiskScore" target="_blank" rel="noopener noreferrer">
-            <span class="project-thumb"><img src="static/riskscore.webp" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
-            <span class="project-info">
-              <h3>RiskScore</h3>
-              <p>Leakage-aware credit default risk pipeline on Lending Club data, with time-based validation, calibration analysis, XGBoost, SHAP, and reproducible reports.</p>
-              <span class="tags"><span>Python</span><span>XGBoost</span><span>SHAP</span></span>
-            </span>
-            <span class="row-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
-          </a>
-        </li>
-
-        <li>
-          <a class="project-row" href="https://github.com/JustinK33/DailyNode" target="_blank" rel="noopener noreferrer">
-            <span class="project-thumb"><img src="static/dailynode.webp" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
-            <span class="project-info">
-              <h3>DailyNode</h3>
-              <p>Modular Discord bot for interview prep: scheduled daily LeetCode and NeetCode posts, per-guild feature toggles so each server tunes its own workflow, containerised and deployed on Google Cloud. Serving 1000+ users.</p>
-              <span class="tags"><span>TypeScript</span><span>Discord API</span><span>Docker</span><span>Google Cloud</span><span>Live: dailynode.org</span></span>
-            </span>
-            <span class="row-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
-          </a>
-        </li>
-
-        <li>
-          <a class="project-row" href="https://github.com/JustinK33/initra" target="_blank" rel="noopener noreferrer">
-            <span class="project-thumb"><img src="static/initra-thumb.webp" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
-            <span class="project-info">
-              <h3>Initra</h3>
-              <p>Cross-platform CLI that scaffolds production-ready starter projects across Python, Node.js, Ruby, Java, Go, and C++ from a single command, including virtualenv setup and optional GitHub repo creation. 600+ downloads on PyPI.</p>
-              <span class="tags"><span>Python</span><span>CLI</span><span>Published on PyPI</span></span>
             </span>
             <span class="row-arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
           </a>
