@@ -1,0 +1,49 @@
+---
+interface Props {
+  num: string;
+  title: string;
+  /** Trailing word rendered in the accent colour. */
+  accent?: string;
+  lede?: string;
+  id: string;
+}
+
+const { num, title, accent, lede, id } = Astro.props;
+---
+
+<div class="sh" data-reveal-stagger>
+  <p class="sh-num" aria-hidden="true">{num}<span class="sh-rule"></span></p>
+  <h2 id={id}>{title}{accent && <> <span class="accent">{accent}</span></>}</h2>
+  {lede && <p class="sh-lede">{lede}</p>}
+</div>
+
+<style>
+  .sh-num {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .sh-rule {
+    width: 2.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-hover), transparent);
+  }
+
+  h2 {
+    margin-top: var(--space-4);
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.035em;
+  }
+
+  .sh-lede {
+    margin-top: var(--space-4);
+    max-width: 34ch;
+    color: var(--text-muted);
+    font-size: var(--fs-base);
+  }
+</style>

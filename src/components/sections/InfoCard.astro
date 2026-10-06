@@ -1,0 +1,105 @@
+---
+import Icon from '../Icon.astro';
+
+interface Props {
+  icon: string;
+  title: string;
+  lines: string[];
+  href: string;
+  external?: boolean;
+}
+
+const { icon, title, lines, href, external = false } = Astro.props;
+---
+
+<a class="card info" href={href} {...external && { target: '_blank', rel: 'noopener noreferrer' }}>
+  <span class="info-icon"><Icon name={icon} /></span>
+  <span class="info-body">
+    <span class="info-title">{title}</span>
+    {lines.map((l) => <span class="info-line">{l}</span>)}
+  </span>
+  <Icon name="chevron" class="info-chevron" />
+</a>
+
+<style>
+  .info {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-5);
+  }
+
+  .info::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(120% 140% at 0% 0%, rgba(255, 122, 89, 0.07), transparent 55%);
+    opacity: 0;
+    transition: opacity var(--dur-hover) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .info-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    color: var(--accent);
+    background: rgba(255, 122, 89, 0.07);
+    border: 1px solid rgba(255, 122, 89, 0.16);
+    border-radius: var(--radius);
+    transition: box-shadow var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
+  }
+
+  .info-icon .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .info-body {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .info-title {
+    margin-bottom: 0.3rem;
+    font-family: var(--font-display);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .info-line {
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .info :global(.info-chevron) {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--text-faint);
+    transition: transform var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
+  }
+
+  .info:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+  }
+
+  .info:hover::before {
+    opacity: 1;
+  }
+
+  .info:hover .info-icon {
+    border-color: rgba(255, 122, 89, 0.35);
+    box-shadow: 0 0 22px -4px rgba(255, 122, 89, 0.45);
+  }
+
+  .info:is(:hover, :focus-visible) :global(.info-chevron) {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+</style>

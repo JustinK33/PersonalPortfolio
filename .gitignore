@@ -1,6 +1,22 @@
-venv/
+# dependencies and build output
+node_modules/
+dist/
+.astro/
+
+# env and secrets
+.env
+.env.*
+
+# deploy and tooling
+.vercel/
 .agents
 .claude
+
+# logs
+npm-debug.log*
+*.log
+
+# os and editors
 .DS_Store
-__pycache__/
-*.pyc
+.vscode/
+.idea/

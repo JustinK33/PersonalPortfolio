@@ -1,0 +1,81 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import InfoCard from './InfoCard.astro';
+import TechStack from './TechStack.astro';
+---
+
+<section class="section about" id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-copy">
+        <SectionHeading num="01" title="About" accent="Me" id="about-heading" />
+        <div class="about-text" data-reveal-stagger>
+          <p>I'm a backend and distributed systems engineer studying Computer and Data Science at Rutgers. Most of my work lives in the server layer: high-performance infrastructure, services that coordinate across process boundaries over gRPC and Protobuf, and the data pipelines feeding them. I write mostly Go and Python, usually with Gin or FastAPI in front, and I spend a lot of time in SQL - Postgres, MySQL, MongoDB, and pgvector when the problem is semantic search - deployed across AWS and GCP.</p>
+          <p>What I actually care about is performance. Where the latency is hiding, which query is doing ten times the work it needs to, how a system degrades instead of collapsing when load shows up unannounced. There's a real gap between code that works and code that holds up under production conditions, and closing that gap - through profiling, better API design, and data models that stay correct when things go wrong - is the part of the job I like most.</p>
+          <p>Outside of school and code, I bowl, box, play basketball, volleyball, and pickleball, and pick up the guitar when I want to slow down. I'm also someone who needs regular walks with music in my ears to think clearly, and I make time for my friends whenever I can. It keeps me balanced against the hours I spend heads down in a terminal.</p>
+        </div>
+      </div>
+
+      <div class="about-cards" data-reveal-stagger style="--delay:150ms">
+        <InfoCard icon="cap" title="Education" lines={['Rutgers University-New Brunswick', 'Computer Science + Data Science']} href="https://www.rutgers.edu/" external />
+        <InfoCard icon="bolt" title="Interests" lines={['Distributed Systems', 'Backend Infrastructure', 'Performance Engineering']} href="#projects" />
+        <InfoCard icon="user" title="Outside Tech" lines={['Basketball, Pickleball, Bowling,', 'Boxing, Gym, Music, Friends']} href="#contact" />
+      </div>
+    </div>
+
+    <TechStack />
+  </div>
+</section>
+
+<style>
+  .about {
+    background: radial-gradient(60% 50% at 85% 30%, rgba(255, 122, 89, 0.035), transparent 70%);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+
+  .about-text {
+    margin-top: var(--space-6);
+  }
+
+  .about-text p {
+    max-width: 64ch;
+    color: var(--text-muted);
+  }
+
+  .about-text p + p {
+    margin-top: var(--space-4);
+  }
+
+  .about-text p:first-child {
+    color: var(--text);
+    font-size: var(--fs-lg);
+    line-height: 1.6;
+  }
+
+  .about-cards {
+    display: grid;
+    gap: var(--space-4);
+    /* Line the first card up with the heading, not the section number, and keep the
+       cards in view while the longer copy scrolls past. */
+    margin-top: var(--space-8);
+    position: sticky;
+    top: calc(var(--header-h-scrolled) + var(--space-6));
+  }
+
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-cards {
+      position: static;
+      margin-top: 0;
+    }
+  }
+</style>

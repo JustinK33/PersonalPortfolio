@@ -1,0 +1,20 @@
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+<style>
+  .scroll-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 150;
+    height: 2px;
+    pointer-events: none;
+  }
+
+  span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 122, 89, 0.4), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    will-change: transform;
+  }
+</style>

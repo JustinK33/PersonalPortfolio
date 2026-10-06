@@ -1,0 +1,124 @@
+---
+import { NODE_H, type Diagram } from '../../data/diagrams';
+
+interface Props {
+  diagram: Diagram;
+  label: string;
+  class?: string;
+}
+
+const { diagram, label, class: className } = Astro.props;
+const markerId = `dg-arrow-${label.toLowerCase().replace(/\W+/g, '-')}`;
+const NODE_W = diagram.nodeW;
+const byId = Object.fromEntries(diagram.nodes.map((n) => [n.id, n]));
+const maxY = Math.max(...diagram.nodes.map((n) => n.y)) + NODE_H + 6;
+
+// Cubic connector between facing sides: horizontal when the nodes sit in different
+// columns, vertical when one is stacked under the other.
+const edges = diagram.edges.map(([from, to, dashed]) => {
+  const a = byId[from];
+  const b = byId[to];
+  let d: string;
+  if (Math.abs(a.x - b.x) >= NODE_W) {
+    const right = b.x > a.x;
+    const x1 = right ? a.x + NODE_W : a.x;
+    const x2 = right ? b.x : b.x + NODE_W;
+    const y1 = a.y + NODE_H / 2;
+    const y2 = b.y + NODE_H / 2;
+    const mx = (x1 + x2) / 2;
+    d = `M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`;
+  } else {
+    const down = b.y > a.y;
+    const x = a.x + NODE_W / 2;
+    const y1 = down ? a.y + NODE_H : a.y;
+    const y2 = down ? b.y : b.y + NODE_H;
+    d = `M${x} ${y1} L${x} ${y2}`;
+  }
+  return { d, dashed, step: a.step };
+});
+---
+
+<svg class:list={['dg', className]} viewBox={`0 0 ${diagram.width} ${maxY}`} role="img" aria-label={label}>
+  <defs>
+    <marker id={markerId} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 8 4 0 8z" fill="rgba(255, 255, 255, 0.3)"></path>
+    </marker>
+  </defs>
+  {edges.map((e) => <path class:list={['dg-edge', e.dashed && 'is-dashed']} d={e.d} style={`--step:${e.step}`} marker-end={`url(#${markerId})`} />)}
+  {
+    diagram.nodes.map((n) => (
+      <g class:list={['dg-node', n.accent && 'is-accent']} style={`--step:${n.step}`}>
+        <rect x={n.x} y={n.y} width={NODE_W} height={NODE_H} rx="8" />
+        <text class="dg-label" x={n.x + NODE_W / 2} y={n.y + 21}>{n.label}</text>
+        <text class="dg-sub" x={n.x + NODE_W / 2} y={n.y + 38}>{n.sub}</text>
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .dg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-mono);
+  }
+
+  .dg-edge {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.16);
+    stroke-width: 1.4;
+    transition: stroke 300ms var(--ease-out);
+    transition-delay: calc(var(--step) * 130ms);
+  }
+
+  .dg-edge.is-dashed {
+    stroke-dasharray: 4 5;
+  }
+
+  .dg-node rect {
+    fill: rgba(255, 255, 255, 0.025);
+    stroke: rgba(255, 255, 255, 0.14);
+    stroke-width: 1;
+    transition:
+      fill 300ms var(--ease-out),
+      stroke 300ms var(--ease-out);
+    transition-delay: calc(var(--step) * 130ms);
+  }
+
+  .dg-node.is-accent rect {
+    fill: rgba(255, 122, 89, 0.08);
+    stroke: rgba(255, 122, 89, 0.4);
+  }
+
+  .dg-label,
+  .dg-sub {
+    text-anchor: middle;
+  }
+
+  .dg-label {
+    font-size: 15px;
+    fill: var(--text);
+  }
+
+  .dg-sub {
+    font-size: 12.5px;
+    fill: var(--text-faint);
+    transition: fill 300ms var(--ease-out);
+    transition-delay: calc(var(--step) * 130ms);
+  }
+
+  /* Hovering the card lights the pipeline in order, step by step. */
+  :global(.proj:hover) .dg-node rect {
+    fill: rgba(255, 122, 89, 0.1);
+    stroke: rgba(255, 122, 89, 0.65);
+  }
+
+  :global(.proj:hover) .dg-sub {
+    fill: var(--text-muted);
+  }
+
+  :global(.proj:hover) .dg-edge {
+    stroke: rgba(255, 122, 89, 0.55);
+  }
+</style>

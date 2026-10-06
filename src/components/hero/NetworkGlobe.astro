@@ -1,0 +1,222 @@
+---
+// Decorative hero composition in three parallax layers (see scripts/pointer.ts):
+// back = glow + orbit rings, mid = the canvas globe, front = terminal card + labels.
+const labels = ['Systems', 'Data', 'Performance', 'Scalability'];
+---
+
+<div class="hv" data-parallax aria-hidden="true">
+  <div class="hv-layer" data-depth="3">
+    <div class="hv-glow"></div>
+    <svg class="hv-orbits" viewBox="0 0 600 600" fill="none">
+      <ellipse cx="300" cy="300" rx="290" ry="118" transform="rotate(-18 300 300)" />
+      <ellipse cx="300" cy="300" rx="262" ry="262" stroke-dasharray="2 7" />
+      <ellipse cx="300" cy="300" rx="296" ry="80" transform="rotate(24 300 300)" />
+      <circle class="orbit-node" cx="31" cy="390" r="3" />
+      <circle class="orbit-node" cx="562" cy="216" r="2.5" />
+      <circle class="orbit-node" cx="516" cy="452" r="2" />
+    </svg>
+  </div>
+
+  <div class="hv-layer" data-depth="7">
+    <canvas class="hv-canvas" id="globe"></canvas>
+  </div>
+
+  <div class="hv-layer" data-depth="11">
+    <div class="term">
+      <div class="term-bar"><i></i><i></i><i></i></div>
+      <p class="term-line"><span class="term-dim">$</span> go run main.go</p>
+      <p class="term-line term-type">&gt; Building something cool...<span class="term-cursor"></span></p>
+    </div>
+
+    <ul class="labels">
+      {labels.map((l, i) => <li style={`--i:${i}`}><span class="label-dot"></span>{l}</li>)}
+    </ul>
+  </div>
+</div>
+
+<script>
+  import { mountGlobe } from '../../scripts/globe';
+  const canvas = document.getElementById('globe');
+  if (canvas instanceof HTMLCanvasElement) mountGlobe(canvas);
+</script>
+
+<style>
+  .hv {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 1;
+    justify-self: end;
+    margin-right: calc(var(--space-6) * -1);
+    animation: settle 1100ms var(--ease-out) both;
+    animation-delay: calc(var(--hero-delay) + 500ms);
+  }
+
+  .hv-layer {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+  }
+
+  .hv-glow {
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 62% 70%, rgba(255, 122, 89, 0.22), transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(255, 122, 89, 0.06), transparent 70%);
+  }
+
+  .hv-orbits {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    stroke: rgba(255, 255, 255, 0.07);
+    stroke-width: 1;
+  }
+
+  .orbit-node {
+    fill: var(--accent);
+    stroke: none;
+    filter: drop-shadow(0 0 4px rgba(255, 122, 89, 0.8));
+  }
+
+  .hv-canvas {
+    position: absolute;
+    inset: 4%;
+    width: 92%;
+    height: 92%;
+  }
+
+  /* --- Front layer --- */
+
+  .term {
+    position: absolute;
+    top: 14%;
+    right: -2%;
+    width: min(250px, 48%);
+    padding: 0.7rem 0.9rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background: rgba(12, 12, 15, 0.82);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.8);
+  }
+
+  .term-bar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 0.6rem;
+  }
+
+  .term-bar i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .term-bar i:first-child {
+    background: var(--accent);
+  }
+
+  .term-line + .term-line {
+    margin-top: 0.3rem;
+  }
+
+  .term-dim {
+    color: var(--text-faint);
+  }
+
+  /* Types out once, then only the cursor blinks. */
+  .term-type {
+    color: var(--text);
+    white-space: nowrap;
+    animation: type 900ms steps(28, end) both;
+    animation-delay: calc(var(--hero-delay) + 1300ms);
+  }
+
+  .term-cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: -0.15em;
+    background: var(--accent);
+    animation: blink 1.1s steps(1) infinite;
+  }
+
+  @keyframes type {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .labels {
+    position: absolute;
+    right: 2%;
+    bottom: 16%;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .labels li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text);
+    background: rgba(12, 12, 15, 0.78);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    animation: rise 600ms var(--ease-out) both;
+    animation-delay: calc(var(--hero-delay) + 1100ms + var(--i) * 90ms);
+  }
+
+  .label-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(255, 122, 89, 0.8);
+  }
+
+  @media (max-width: 1024px) {
+    .hv {
+      justify-self: center;
+      max-width: 520px;
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hv {
+      max-width: 400px;
+    }
+
+    .term {
+      right: 0;
+      top: 4%;
+      width: auto;
+    }
+
+    /* Too crowded at phone size; the globe carries the composition on its own. */
+    .labels {
+      display: none;
+    }
+  }
+</style>

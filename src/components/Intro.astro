@@ -1,0 +1,60 @@
+---
+/* Under 700ms total: JK. appears, the dot lights, the overlay fades.
+   Pure CSS and fixed-position, so it can never cause layout shift or block content
+   if JS fails. Only shown on the first page view of a session (see Base.astro). */
+---
+
+<div class="intro" aria-hidden="true">
+  <span class="intro-mark">JK<span class="intro-dot">.</span></span>
+</div>
+
+<style>
+  .intro {
+    display: none;
+  }
+
+  :global(.has-intro) .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    pointer-events: none;
+    animation: intro-out 220ms var(--ease-out) 480ms forwards;
+  }
+
+  .intro-mark {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    animation: intro-in 260ms var(--ease-out) both;
+  }
+
+  .intro-dot {
+    color: var(--text-faint);
+    animation: intro-dot 200ms var(--ease-out) 230ms forwards;
+  }
+
+  @keyframes intro-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes intro-dot {
+    to {
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(255, 122, 89, 0.7);
+    }
+  }
+
+  @keyframes intro-out {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+</style>

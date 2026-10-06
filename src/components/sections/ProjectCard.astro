@@ -1,0 +1,284 @@
+---
+import Icon from '../Icon.astro';
+import Diagram from '../diagrams/Diagram.astro';
+import type { Project } from '../../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project: p } = Astro.props;
+const Tag = p.url ? 'a' : 'div';
+const linkProps = p.url ? { href: p.url, target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<li class:list={['proj-cell', p.feature && 'is-feature', p.wide && 'is-wide']} data-reveal>
+  <Tag class:list={['card proj', !p.url && 'is-static']} data-spotlight {...linkProps}>
+    <div class="proj-body">
+      <div class="proj-title">
+        <h3>{p.name}</h3>
+        {
+          p.url && (
+            <span class="corner-arrow" aria-hidden="true">
+              <Icon name="arrow" />
+            </span>
+          )
+        }
+      </div>
+      <p class="proj-desc">{p.description}</p>
+      <ul class="proj-tags" aria-label="Built with">
+        {p.tags.map((t) => <li class="pill">{t}</li>)}
+      </ul>
+    </div>
+
+    {
+      p.stats && (
+        <dl class="proj-stats">
+          {p.stats.map((s) => (
+            <div>
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    <div class:list={['proj-visual', p.diagram ? 'is-diagram' : 'is-shot']}>
+      {
+        p.diagram ? (
+          <>
+            <Diagram diagram={p.diagram} label={`${p.name} architecture diagram`} class:list={[p.diagramCompact && 'dg-full']} />
+            {p.diagramCompact && <Diagram diagram={p.diagramCompact} label={`${p.name} architecture diagram, compact`} class="dg-compact" />}
+          </>
+        ) : (
+          <img src={p.image} width="360" height="240" alt={`${p.name} screenshot`} loading="lazy" decoding="async" />
+        )
+      }
+    </div>
+  </Tag>
+</li>
+
+<style>
+  .proj-cell {
+    display: flex;
+  }
+
+  .proj {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Cursor spotlight (scripts/pointer.ts sets --mx/--my). Kept very faint. */
+  .proj::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 122, 89, 0.07), transparent 45%);
+    opacity: 0;
+    transition: opacity 350ms var(--ease-out);
+    pointer-events: none;
+  }
+
+  .proj:hover::after {
+    opacity: 1;
+  }
+
+  a.proj:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+  }
+
+  .proj.is-static {
+    cursor: default;
+  }
+
+  .proj-body {
+    padding: var(--space-5) var(--space-5) 0;
+  }
+
+  .proj-title {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  h3 {
+    font-size: var(--fs-lg);
+    letter-spacing: -0.02em;
+  }
+
+  .proj-desc {
+    margin-top: var(--space-3);
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: var(--space-4);
+  }
+
+  .proj:hover .pill {
+    color: var(--text);
+    border-color: var(--border-hover);
+  }
+
+  .proj-visual {
+    margin-top: auto;
+    padding: var(--space-5);
+  }
+
+  .proj-visual > :global(*) {
+    transition: transform 450ms var(--ease-out);
+  }
+
+  .proj:hover .proj-visual > :global(*) {
+    transform: translateY(-4px);
+  }
+
+  /* Diagrams grow to fill whatever height the row gives the card. */
+  .is-diagram {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    margin: var(--space-5);
+    padding: var(--space-5) var(--space-4);
+    background:
+      radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1.2px) 0 0 / 18px 18px,
+      rgba(0, 0, 0, 0.18);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .is-shot img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  /* --- Wide card: text and screenshot side by side --- */
+
+  .is-wide .proj {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: center;
+  }
+
+  .is-wide .proj-body {
+    padding-bottom: var(--space-5);
+  }
+
+  .is-wide .proj-visual {
+    padding-left: 0;
+  }
+
+  /* --- Feature card --- */
+
+  .is-feature h3 {
+    font-size: var(--fs-xl);
+  }
+
+  .is-feature .proj-body {
+    padding: var(--space-6) var(--space-6) 0;
+  }
+
+  .is-feature .proj-desc {
+    font-size: var(--fs-base);
+    max-width: 70ch;
+  }
+
+  .is-feature .is-diagram {
+    margin: 0 var(--space-6) var(--space-6);
+    padding: var(--space-7) var(--space-6);
+  }
+
+  .proj-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: var(--space-6) var(--space-6) var(--space-5);
+    border-block: 1px solid var(--border);
+  }
+
+  .proj-stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.2rem;
+    padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  }
+
+  .proj-stats div + div {
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--border);
+  }
+
+  .proj-stats dd {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .proj-stats dt {
+    font-size: var(--fs-2xs);
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .proj-visual > :global(.dg-compact) {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .proj-visual > :global(.dg-full) {
+      display: none;
+    }
+
+    .proj-visual > :global(.dg-compact) {
+      display: block;
+    }
+
+    .is-wide .proj {
+      display: flex;
+    }
+
+    .is-wide .proj-body {
+      padding-bottom: 0;
+    }
+
+    .is-wide .proj-visual {
+      padding-left: var(--space-5);
+    }
+
+    .is-feature .proj-body {
+      padding: var(--space-5) var(--space-5) 0;
+    }
+
+    .is-feature .is-diagram {
+      margin: 0 var(--space-5) var(--space-5);
+      padding: var(--space-5) var(--space-3);
+    }
+
+    .proj-stats {
+      grid-template-columns: 1fr;
+      margin: var(--space-5);
+    }
+
+    .proj-stats div + div {
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+    }
+  }
+</style>

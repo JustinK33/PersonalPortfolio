@@ -1,0 +1,375 @@
+---
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import NetworkGlobe from './NetworkGlobe.astro';
+import { site } from '../../data/site';
+import { heroStack } from '../../data/tech';
+
+// Faint background network, generated once at build time from a fixed seed so the
+// markup is stable between builds.
+let seed = 7;
+const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const nodes = Array.from({ length: 16 }, () => ({ x: rand() * 1200, y: rand() * 800 }));
+const lines: [number, number, number, number][] = [];
+nodes.forEach((a, i) =>
+  nodes.slice(i + 1).forEach((b) => {
+    if (Math.hypot(a.x - b.x, a.y - b.y) < 300) lines.push([a.x, a.y, b.x, b.y]);
+  }),
+);
+---
+
+<section class="hero" id="home" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <svg class="hero-net" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      {lines.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} />)}
+      {nodes.map((n, i) => <circle cx={n.x} cy={n.y} r={i % 4 === 0 ? 2 : 1.2} class:list={[i % 4 === 0 && 'twinkle']} style={`--t:${i}`} />)}
+    </svg>
+  </div>
+
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <p class="badge seq" style="--s:0">
+        <span class="badge-dot" aria-hidden="true"></span>
+        {site.availability}
+      </p>
+
+      <h1 class="hero-title" id="hero-title">
+        <span class="mask"><span class="mask-inner">Hi, I'm <span class="accent">Justin.</span></span></span>
+      </h1>
+
+      <p class="hero-role seq" style="--s:2">
+        Distributed systems engineer building <strong>high‑performance backend &amp; data infrastructure</strong>
+      </p>
+      <p class="hero-meta seq" style="--s:2.6">Computer &amp; Data Science @ Rutgers University</p>
+
+      <ul class="hero-stack" aria-label="Core stack">
+        {
+          heroStack.map((t, i) => (
+            <li class="pill seq" style={`--s:${3.2 + i * 0.35}`}>
+              <img src={t.icon} width="14" height="14" alt="" decoding="async" />
+              {t.name}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="hero-actions seq" style="--s:5.6">
+        <Button href="#projects" arrow>View my work</Button>
+        <Button href="#contact" variant="secondary">Get in touch</Button>
+        <span class="hero-divider" aria-hidden="true"></span>
+        <a class="hero-social" href={site.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Icon name="github" /></a>
+        <a class="hero-social" href={site.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Icon name="linkedin" /></a>
+      </div>
+    </div>
+
+    <NetworkGlobe />
+  </div>
+
+  <a class="scroll-cue seq" href="#about" style="--s:7">
+    <span class="scroll-line" aria-hidden="true"></span>
+    Scroll to explore
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: min(100svh, 940px);
+    padding-top: calc(var(--header-h) + var(--space-6));
+    padding-bottom: var(--space-10);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* --- Background --- */
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 65% 45%, #000 10%, transparent 75%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 8%;
+    right: -10%;
+    width: 70vw;
+    max-width: 1000px;
+    aspect-ratio: 1;
+    background: radial-gradient(closest-side, rgba(255, 122, 89, 0.13), rgba(255, 122, 89, 0.04) 55%, transparent);
+  }
+
+  /* Fade the bottom edge into the next section. */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 30%;
+    background: linear-gradient(transparent, var(--bg));
+  }
+
+  .hero-net {
+    position: absolute;
+    inset: -4%;
+    width: 108%;
+    height: 108%;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 1;
+    fill: rgba(255, 150, 120, 0.35);
+    animation: drift 60s ease-in-out infinite alternate;
+  }
+
+  .hero-net .twinkle {
+    fill: var(--accent);
+    animation: twinkle 6s ease-in-out infinite;
+    animation-delay: calc(var(--t) * -0.7s);
+  }
+
+  @keyframes drift {
+    to {
+      transform: translate3d(-24px, 14px, 0);
+    }
+  }
+
+  @keyframes twinkle {
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  /* --- Layout --- */
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  /* --- Entrance sequence (CSS only; `both` always ends visible) --- */
+
+  .seq {
+    animation: rise 700ms var(--ease-out) both;
+    animation-delay: calc(var(--hero-delay) + var(--s, 0) * 110ms);
+  }
+
+  .mask {
+    display: block;
+    overflow: hidden;
+    /* Room for descenders without clipping them. */
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+  }
+
+  .mask-inner {
+    display: inline-block;
+    animation: mask-up 900ms var(--ease-out) both;
+    animation-delay: calc(var(--hero-delay) + 110ms);
+  }
+
+  /* --- Copy --- */
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.32rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-pill);
+  }
+
+  .badge-dot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .badge-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse-ring 2.6s var(--ease-out) infinite;
+  }
+
+  .hero-title {
+    margin-top: var(--space-5);
+    font-size: var(--fs-hero);
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+  }
+
+  .hero-role {
+    margin-top: var(--space-5);
+    max-width: 34ch;
+    font-size: var(--fs-xl);
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  .hero-role strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .hero-meta {
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+  }
+
+  .hero-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+  }
+
+  .hero-stack .pill {
+    padding: 0.35rem 0.75rem 0.35rem 0.45rem;
+    font-size: var(--fs-xs);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* The brand marks are drawn for light backgrounds, so each sits on a tiny light tile. */
+  .hero-stack img {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    background: #f4f5f7;
+    border-radius: 5px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 24px;
+    margin-inline: var(--space-2);
+    background: var(--border-hover);
+  }
+
+  .hero-social {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    color: var(--text-muted);
+    border-radius: var(--radius);
+    transition: color var(--dur-hover) var(--ease-out), background-color var(--dur-hover) var(--ease-out);
+  }
+
+  .hero-social:hover {
+    color: var(--text);
+    background: var(--surface-hover);
+  }
+
+  .hero-social .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    left: max(var(--gutter), calc((100% - var(--content)) / 2 + var(--gutter)));
+    bottom: var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--text-faint);
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+
+  .scroll-cue:hover {
+    color: var(--text-muted);
+  }
+
+  .scroll-line {
+    position: relative;
+    width: 1px;
+    height: 40px;
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent, var(--accent));
+    animation: scroll-hint 2.4s var(--ease-out) infinite;
+  }
+
+  @keyframes scroll-hint {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .scroll-cue {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      min-height: 0;
+      padding-top: calc(var(--header-h) + var(--space-7));
+      padding-bottom: var(--space-8);
+    }
+
+    .hero-net {
+      animation: none;
+    }
+
+    .hero-actions :global(.btn) {
+      flex: 1 1 auto;
+    }
+
+    .hero-divider {
+      display: none;
+    }
+  }
+</style>

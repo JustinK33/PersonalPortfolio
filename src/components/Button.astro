@@ -1,0 +1,99 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'md' | 'sm';
+  icon?: string;
+  arrow?: boolean;
+  external?: boolean;
+  class?: string;
+}
+
+const { href, variant = 'primary', size = 'md', icon, arrow = false, external = false, class: className } = Astro.props;
+---
+
+<a
+  class:list={['btn', `btn-${variant}`, `btn-${size}`, className]}
+  href={href}
+  data-magnetic
+  {...external && { target: '_blank', rel: 'noopener noreferrer' }}
+>
+  {icon && <Icon name={icon} class="btn-icon" />}
+  <slot />
+  {arrow && <Icon name="arrow-right" class="btn-arrow" />}
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 46px;
+    padding: 0 1.3rem;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    white-space: nowrap;
+    /* `translate` is owned by the magnetic effect, `transform` by hover/press. */
+    transition:
+      transform var(--dur-hover) var(--ease-out),
+      translate 400ms var(--ease-out),
+      background-color var(--dur-hover) var(--ease-out),
+      border-color var(--dur-hover) var(--ease-out),
+      box-shadow var(--dur-hover) var(--ease-out);
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    padding: 0 0.95rem;
+    font-size: var(--fs-xs);
+  }
+
+  .btn .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .btn-arrow {
+    transition: transform var(--dur-hover) var(--ease-out);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+    transition-duration: var(--dur-press);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 8px 28px -10px rgba(255, 122, 89, 0.55);
+  }
+
+  .btn-secondary {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--border-hover);
+  }
+
+  .btn-secondary:hover {
+    background: var(--surface-hover);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+</style>

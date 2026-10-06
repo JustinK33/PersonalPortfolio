@@ -1,0 +1,347 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { site } from '../../data/site';
+
+// Perspective floor: rays from a vanishing point on the horizon, plus receding cross lines.
+const VX = 600;
+const HY = 250;
+const rays = Array.from({ length: 19 }, (_, i) => -1800 + i * 200);
+const rows = [262, 280, 308, 350, 412, 500];
+---
+
+<section class="section contact" id="contact" aria-labelledby="contact-heading">
+  <div class="contact-bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <radialGradient id="ct-sun" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#ff7a59" stop-opacity="0.36"></stop>
+          <stop offset="0.25" stop-color="#ff7a59" stop-opacity="0.16"></stop>
+          <stop offset="0.55" stop-color="#ff7a59" stop-opacity="0.05"></stop>
+          <stop offset="1" stop-color="#ff7a59" stop-opacity="0"></stop>
+        </radialGradient>
+        <linearGradient id="ct-horizon" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#ff7a59" stop-opacity="0"></stop>
+          <stop offset="0.5" stop-color="#ff7a59" stop-opacity="0.35"></stop>
+          <stop offset="1" stop-color="#ff7a59" stop-opacity="0"></stop>
+        </linearGradient>
+        <linearGradient id="ct-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"></stop>
+          <stop offset="1" stop-color="#fff" stop-opacity="1"></stop>
+        </linearGradient>
+        <mask id="ct-mask"><rect x="0" y={HY} width="1200" height={500 - HY} fill="url(#ct-fade)"></rect></mask>
+      </defs>
+      <ellipse class="ct-sun" cx={VX} cy={HY} rx="560" ry="190" fill="url(#ct-sun)"></ellipse>
+      <line class="ct-horizon" x1="0" y1={HY} x2="1200" y2={HY}></line>
+      <g class="ct-floor" mask="url(#ct-mask)">
+        {rays.map((x) => <line x1={VX} y1={HY} x2={VX + x} y2="500" />)}
+        {rows.map((y) => <line x1="0" y1={y} x2="1200" y2={y} />)}
+      </g>
+      <g class="ct-net">
+        <polyline points="180,250 330,212 470,236 600,196 735,232 880,206 1030,250"></polyline>
+        {[[330, 212], [470, 236], [600, 196], [735, 232], [880, 206]].map(([x, y]) => <circle cx={x} cy={y} r="2.4" />)}
+      </g>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="contact-head">
+      <SectionHeading num="04" title="Get in" accent="Touch" id="contact-heading" />
+      <div class="contact-intro" data-reveal-stagger style="--delay:140ms">
+        <p class="contact-sub">Have a role, a project, or a systems problem you want a second pair of eyes on? LinkedIn is the fastest way to reach me, and email works just as well.</p>
+        <div class="contact-actions">
+          <Button href={site.linkedin} icon="linkedin" arrow external>Message me on LinkedIn</Button>
+          <Button href={site.github} icon="github" variant="secondary" external>Browse my GitHub</Button>
+        </div>
+      </div>
+    </div>
+
+    <ul class="contact-cards" data-reveal-stagger style="--delay:220ms">
+      <li>
+        <div class="card cc cc-email">
+        <span class="cc-icon"><Icon name="mail" /></span>
+        <span class="cc-label">Email</span>
+        <a class="cc-value" href={`mailto:${site.email}`}>{site.email}</a>
+        <button type="button" class="copy-btn" id="copy-email" data-email={site.email} aria-describedby="copy-status">
+          <Icon name="copy" class="icon-copy" />
+          <Icon name="check" class="icon-check" />
+          <span class="copy-label">Copy</span>
+        </button>
+        </div>
+      </li>
+      <li>
+        <a class="card cc cc-linkedin" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+          <span class="cc-icon"><Icon name="linkedin" /></span>
+          <span class="cc-label">LinkedIn</span>
+          <span class="cc-value">{site.linkedinLabel}</span>
+          <span class="corner-arrow" aria-hidden="true"><Icon name="arrow" /></span>
+        </a>
+      </li>
+      <li>
+        <a class="card cc cc-github" href={site.github} target="_blank" rel="noopener noreferrer">
+          <span class="cc-icon"><Icon name="github" /></span>
+          <span class="cc-label">GitHub</span>
+          <span class="cc-value">{site.githubLabel}</span>
+          <span class="corner-arrow" aria-hidden="true"><Icon name="arrow" /></span>
+        </a>
+      </li>
+    </ul>
+    <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-bottom: var(--space-10);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* --- Background --- */
+
+  .contact-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .contact-bg svg {
+    position: absolute;
+    inset: auto 0 0 0;
+    width: 100%;
+    height: 78%;
+    /* The slice crop cuts the art at the SVG's edges on wide screens, so fade every edge
+       out: the glow blends up into the heading and the floor melts into the footer. */
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, #000 28%, #000 85%, transparent 100%),
+      linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+
+  .ct-sun {
+    animation: breathe 9s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    to {
+      opacity: 0.7;
+    }
+  }
+
+  .ct-horizon {
+    stroke: url(#ct-horizon);
+    stroke-width: 1;
+  }
+
+  .ct-floor line {
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 1;
+  }
+
+  .ct-net polyline {
+    fill: none;
+    stroke: rgba(255, 122, 89, 0.16);
+    stroke-width: 1;
+  }
+
+  .ct-net circle {
+    fill: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* --- Content --- */
+
+  .contact-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-6) clamp(2rem, 6vw, 5rem);
+    align-items: end;
+  }
+
+  .contact-sub {
+    max-width: 52ch;
+    color: var(--text-muted);
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+  }
+
+  .contact-cards > li {
+    display: flex;
+  }
+
+  .cc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'icon action'
+      'label label'
+      'value value';
+    align-items: start;
+    width: 100%;
+    padding: var(--space-5);
+    background-color: rgba(9, 9, 11, 0.6);
+  }
+
+  .cc:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+  }
+
+  .cc-icon {
+    grid-area: icon;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .cc-icon :global(.icon) {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
+  }
+
+  .cc:hover .cc-icon :global(.icon) {
+    color: var(--accent);
+  }
+
+  .cc-linkedin:hover .cc-icon :global(.icon) {
+    transform: translate(1px, -2px);
+  }
+
+  .cc-github:hover .cc-icon :global(.icon) {
+    transform: rotate(5deg);
+  }
+
+  .cc-email:hover .cc-icon :global(.icon) {
+    transform: translateY(-1px);
+  }
+
+  .cc .corner-arrow,
+  .copy-btn {
+    grid-area: action;
+  }
+
+  .cc-label {
+    grid-area: label;
+    margin-top: var(--space-5);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .cc-value {
+    grid-area: value;
+    margin-top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+
+  /* Selectable text is the fallback if the clipboard write is blocked. */
+  .cc-email .cc-value {
+    user-select: all;
+  }
+
+  .cc-email .cc-value:hover {
+    color: var(--accent);
+  }
+
+  .cc:hover .cc-value {
+    color: var(--text);
+  }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 34px;
+    padding: 0 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--text-muted);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-sm);
+    transition: color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out), transform var(--dur-press) var(--ease-out);
+  }
+
+  .copy-btn:hover {
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .copy-btn:active {
+    transform: scale(0.96);
+  }
+
+  .copy-btn :global(.icon) {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .copy-btn :global(.icon-check),
+  .copy-btn:global(.is-copied) :global(.icon-copy) {
+    display: none;
+  }
+
+  .copy-btn:global(.is-copied) {
+    color: var(--accent);
+    border-color: var(--accent-line);
+  }
+
+  .copy-btn:global(.is-copied) :global(.icon-check) {
+    display: block;
+    animation: pop 260ms var(--ease-spring);
+  }
+
+  @keyframes pop {
+    from {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+  }
+
+  .copy-status {
+    min-height: 1.4em;
+    margin-top: var(--space-3);
+    font-size: var(--fs-2xs);
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 1024px) {
+    .contact-head {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .contact-cards {
+      grid-template-columns: 1fr;
+      margin-top: var(--space-7);
+    }
+
+    .contact-actions :global(.btn) {
+      flex: 1 1 auto;
+    }
+  }
+</style>

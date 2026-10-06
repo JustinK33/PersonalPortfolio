@@ -1,0 +1,183 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import ProjectCard from './ProjectCard.astro';
+import Icon from '../Icon.astro';
+import { projects } from '../../data/projects';
+import { site } from '../../data/site';
+---
+
+<section class="section projects" id="projects" aria-labelledby="projects-heading">
+  <div class="container">
+    <SectionHeading
+      num="03"
+      title="Projects"
+      id="projects-heading"
+      lede="A collection of projects I've built, from distributed systems to full stack applications."
+    />
+    <ul class="bento">
+      {projects.map((p) => <ProjectCard project={p} />)}
+      <li class="more" data-reveal>
+        <a class="card more-card" href={site.github} target="_blank" rel="noopener noreferrer" data-spotlight>
+          <span class="more-icon"><Icon name="github" /></span>
+          <span class="more-text">
+            <span class="more-title">More on GitHub</span>
+            <span class="more-sub">Experiments, coursework, and everything still in progress.</span>
+          </span>
+          <span class="more-handle">{site.githubLabel}</span>
+          <span class="corner-arrow" aria-hidden="true"><Icon name="arrow" /></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .projects {
+    background: radial-gradient(50% 40% at 15% 20%, rgba(255, 122, 89, 0.035), transparent 70%);
+  }
+
+  /* Desktop (3 cols): feature + one, three across, then the wide card + the GitHub card. */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .bento > :global(:is(.is-feature, .is-wide)) {
+    grid-column: span 2;
+  }
+
+  .more {
+    display: flex;
+  }
+
+  .more-card {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--space-4);
+    width: 100%;
+    padding: var(--space-6);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .more-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 122, 89, 0.07), transparent 45%);
+    opacity: 0;
+    transition: opacity 350ms var(--ease-out);
+  }
+
+  .more-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+  }
+
+  .more-card:hover::after {
+    opacity: 1;
+  }
+
+  .more-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: transform var(--dur-hover) var(--ease-out);
+  }
+
+  .more-icon :global(.icon) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .more-card:hover .more-icon {
+    transform: rotate(-5deg);
+  }
+
+  .more-text {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: auto;
+  }
+
+  .more-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .more-sub {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+
+  .more-handle {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-faint);
+  }
+
+  .more-card .corner-arrow {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-6);
+  }
+
+  @media (max-width: 1024px) {
+    .bento {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Odd card out in two columns: the GitHub card closes the grid full width. */
+    .more {
+      grid-column: span 2;
+    }
+
+    .more-card {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .more-text {
+      margin: 0 auto 0 0;
+    }
+
+    .more-card .corner-arrow {
+      position: static;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .bento {
+      grid-template-columns: 1fr;
+    }
+
+    .bento > :global(:is(.is-feature, .is-wide)),
+    .more {
+      grid-column: auto;
+    }
+
+    .more-card {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .more-text {
+      margin: 0;
+    }
+
+    .more-card .corner-arrow {
+      position: absolute;
+    }
+  }
+</style>

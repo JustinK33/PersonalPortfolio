@@ -1,0 +1,66 @@
+/* Motion system.
+   Content is only hidden when JS has run (html.js), so no code path leaves it invisible.
+   [data-reveal]          fades + rises once when it enters the viewport (scripts/reveal.ts).
+   [data-reveal-stagger]  same, applied to each direct child with a 70ms stagger. */
+
+/* Hidden until revealed, then a one-shot animation with `backwards` fill: once it ends
+   nothing stays applied, so it never fights an element's own hover transitions. */
+.js [data-reveal]:not(.is-in),
+.js [data-reveal-stagger]:not(.is-in) > * {
+  opacity: 0;
+}
+
+.js [data-reveal].is-in,
+.js [data-reveal-stagger].is-in > * {
+  animation: rise var(--dur-enter) var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * var(--stagger) + var(--delay, 0ms));
+}
+
+/* Hero entrance: a timed sequence on load rather than on scroll. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+}
+
+@keyframes mask-up {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

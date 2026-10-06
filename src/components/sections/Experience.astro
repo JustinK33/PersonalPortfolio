@@ -1,0 +1,204 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import { experience } from '../../data/experience';
+---
+
+<section class="section experience" id="experience" aria-labelledby="experience-heading">
+  <div class="container exp-grid">
+    <div class="exp-aside">
+      <SectionHeading num="02" title="Experience" id="experience-heading" lede="A timeline of my journey and the problems I've worked on." />
+    </div>
+
+    <div class="tl" data-timeline>
+      <span class="tl-track" aria-hidden="true"><span class="tl-fill"></span></span>
+      <ol class="tl-list">
+      {
+        experience.map((job) => (
+          <li class:list={['tl-item', job.end === 'Present' && 'is-current']} data-reveal>
+            <span class="tl-node" aria-hidden="true" />
+            <a class="card tl-card" href={job.url} target="_blank" rel="noopener noreferrer">
+              <div class="tl-head">
+                <h3>{job.company}</h3>
+                <p class="tl-role">{job.role}</p>
+                <p class="tl-meta">
+                  <span>
+                    {job.start} - {job.end}
+                  </span>
+                  <span>{job.location}</span>
+                </p>
+              </div>
+              <p class="tl-summary">{job.summary}</p>
+              <span class="corner-arrow" aria-hidden="true">
+                <Icon name="arrow" />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .exp-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .exp-aside {
+    position: sticky;
+    top: calc(var(--header-h-scrolled) + var(--space-8));
+  }
+
+  /* --- Timeline --- */
+
+  .tl {
+    --node: 11px;
+    --rail: 5px; /* rail x, centre of the node column */
+    position: relative;
+    padding-left: var(--space-7);
+  }
+
+  .tl-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .tl-track {
+    position: absolute;
+    top: 30px;
+    bottom: 30px;
+    left: var(--rail);
+    width: 1px;
+    background: var(--border);
+    overflow: hidden;
+  }
+
+  /* Progress fill, driven by --fill (0..1) from scripts/scroll.ts. */
+  .tl-fill {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(var(--accent), rgba(255, 122, 89, 0.5));
+    transform: scaleY(var(--fill, 0));
+    transform-origin: top;
+  }
+
+  .tl-item {
+    position: relative;
+  }
+
+  .tl-node {
+    position: absolute;
+    top: 30px;
+    left: calc(var(--rail) - var(--space-7) - var(--node) / 2 + 0.5px);
+    width: var(--node);
+    height: var(--node);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--border-hover);
+    transition:
+      background-color 500ms var(--ease-out),
+      border-color 500ms var(--ease-out),
+      box-shadow 500ms var(--ease-out);
+    transition-delay: 250ms;
+  }
+
+  .tl-item.is-in .tl-node {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255, 122, 89, 0.1);
+  }
+
+  .is-current .tl-node::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse-ring 2.8s var(--ease-out) infinite;
+  }
+
+  /* --- Card --- */
+
+  .tl-card {
+    display: grid;
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) auto;
+    gap: var(--space-3) var(--space-6);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .tl-card:hover {
+    transform: translateX(4px);
+    border-color: var(--border-hover);
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .tl-head h3 {
+    font-size: var(--fs-lg);
+    color: var(--text-muted);
+    transition: color 600ms var(--ease-out);
+  }
+
+  .is-in .tl-head h3 {
+    color: var(--text);
+  }
+
+  .tl-role {
+    margin-top: 0.2rem;
+    font-size: var(--fs-xs);
+    color: var(--accent);
+  }
+
+  .tl-meta {
+    display: grid;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--text-faint);
+    line-height: 1.7;
+  }
+
+  .tl-summary {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1024px) {
+    .exp-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .exp-aside {
+      position: static;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .tl {
+      padding-left: var(--space-6);
+    }
+
+    .tl-node {
+      left: calc(var(--rail) - var(--space-6) - var(--node) / 2 + 0.5px);
+    }
+
+    .tl-card {
+      grid-template-columns: minmax(0, 1fr) auto;
+      padding: var(--space-5);
+    }
+
+    .tl-card .corner-arrow {
+      grid-row: 1;
+      grid-column: 2;
+    }
+
+    .tl-summary {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

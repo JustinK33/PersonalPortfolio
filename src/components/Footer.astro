@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <a class="logo" href="#home">JK<span class="accent">.</span><span class="visually-hidden"> Justin Kong, back to top</span></a>
+    <nav class="footer-nav" aria-label="Footer">
+      {nav.map((item) => <a href={`#${item.id}`}>{item.label}</a>)}
+    </nav>
+    <ul class="socials">
+      <li><a href={site.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Icon name="github" /></a></li>
+      <li><a href={site.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Icon name="linkedin" /></a></li>
+    </ul>
+    <p class="copyright">© {year} Justin Kong</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-6);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    margin-right: auto;
+  }
+
+  .footer-nav a,
+  .copyright {
+    font-size: var(--fs-xs);
+    color: var(--text-muted);
+  }
+
+  .footer-nav a {
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+
+  .footer-nav a:hover {
+    color: var(--text);
+  }
+
+  .socials {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
+  }
+
+  .socials a:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+  }
+
+  .socials .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .copyright {
+    font-family: var(--font-mono);
+  }
+</style>

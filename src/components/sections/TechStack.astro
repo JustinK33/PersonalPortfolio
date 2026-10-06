@@ -1,0 +1,102 @@
+---
+import { stack } from '../../data/tech';
+---
+
+<div class="tech" aria-labelledby="tech-heading">
+  <h3 class="tech-heading" id="tech-heading" data-reveal>Tools I reach for day to day</h3>
+  <ul class="tech-grid" data-reveal-stagger>
+    {
+      stack.map((t) => (
+        <li class="card tech-item">
+          <img src={t.icon} width="48" height="48" alt="" loading="lazy" decoding="async" />
+          <span>{t.name}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .tech {
+    margin-top: var(--space-10);
+  }
+
+  .tech-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .tech-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* 12 tiles: 6x2, 4x3, 3x4. Keep the column count a divisor of the tile count. */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .tech-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+  }
+
+  /* Brand marks are drawn for light backgrounds, so each keeps its own light tile. */
+  .tech-item img {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    background: #f4f5f7;
+    border-radius: 10px;
+    transition: transform var(--dur-hover) var(--ease-out);
+  }
+
+  .tech-item span {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: var(--text-muted);
+    transition: color var(--dur-hover) var(--ease-out);
+  }
+
+  .tech-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+    box-shadow: 0 10px 30px -18px rgba(255, 122, 89, 0.45);
+  }
+
+  .tech-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .tech-item:hover span {
+    color: var(--text);
+  }
+
+  @media (max-width: 1024px) {
+    .tech-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tech-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
